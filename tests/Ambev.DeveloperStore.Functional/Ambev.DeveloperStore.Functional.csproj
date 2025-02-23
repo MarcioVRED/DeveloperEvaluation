@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Ambev.DeveloperEvaluation.Domain\Ambev.DeveloperEvaluation.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Ambev.DeveloperEvaluation.Application\Ambev.DeveloperEvaluation.Application.csproj" />
-    <ProjectReference Include="..\..\src\Ambev.DeveloperEvaluation.ORM\Ambev.DeveloperEvaluation.ORM.csproj" />
+    <ProjectReference Include="..\..\src\Ambev.DeveloperStore.Domain\Ambev.DeveloperStore.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Ambev.DeveloperStore.Application\Ambev.DeveloperStore.Application.csproj" />
+    <ProjectReference Include="..\..\src\Ambev.DeveloperStore.ORM\Ambev.DeveloperStore.ORM.csproj" />
   </ItemGroup>
 
 </Project>
