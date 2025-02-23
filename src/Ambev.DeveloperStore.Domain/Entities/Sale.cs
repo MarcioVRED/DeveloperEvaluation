@@ -1,6 +1,8 @@
-﻿namespace Ambev.DeveloperStore.Domain.Entities
+﻿using Ambev.DeveloperStore.Domain.Common;
+
+namespace Ambev.DeveloperStore.Domain.Entities
 {
-    public class Sale
+    public class Sale : BaseEntity
     {
         public int SaleId { get; private set; }
         public DateTime Date { get; private set; }
