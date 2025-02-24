@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
+﻿using Xunit;
 using Ambev.DeveloperStore.Domain.Entities;
 
 namespace DeveloperStore.Tests.Sales
@@ -27,6 +25,15 @@ namespace DeveloperStore.Tests.Sales
         public void Should_Throw_Exception_When_BranchName_Is_Null_Or_Empty()
         {
             Assert.Throws<ArgumentException>(() => new Sale("John Doe", "", new List<SaleItem>
+            {
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
+            }));
+        }
+
+        [Fact(DisplayName = "Should throw exception when customerName is null or empty")]
+        public void Should_Throw_Exception_When_CustomerName_Is_Null_Or_Empty()
+        {
+            Assert.Throws<ArgumentException>(() => new Sale("", "Branch A", new List<SaleItem>
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
             }));
@@ -74,6 +81,18 @@ namespace DeveloperStore.Tests.Sales
             sale.ApplyDiscounts();
             Assert.Equal(0m, sale.Items[0].Discount);
             Assert.Equal(100m, sale.TotalSaleAmount);
+        }
+
+        [Fact(DisplayName = "Should calculate total sale amount correctly")]
+        public void Should_Calculate_Total_Sale_Amount_Correctly()
+        {
+            var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
+            {
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 2, 100m),
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product B", 3, 50m)
+            });
+
+            Assert.Equal(350m, sale.TotalSaleAmount);
         }
     }
 }
