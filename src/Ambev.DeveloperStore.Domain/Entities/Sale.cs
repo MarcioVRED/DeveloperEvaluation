@@ -1,40 +1,67 @@
 ﻿using Ambev.DeveloperStore.Domain.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ambev.DeveloperStore.Domain.Entities
 {
     public class Sale : BaseEntity
     {
-        public int SaleNumber { get; private set; }
-        public DateTime SaleDate { get; private set; }
+        public Guid Id { get; private set; }
         public string CustomerName { get; private set; }
         public string BranchName { get; private set; }
         public List<SaleItem> Items { get; private set; }
         public bool IsCancelled { get; private set; }
-        public decimal TotalSaleAmount => Items.Sum(item => item.TotalItemAmount);
+        public string SaleNumber { get; private set; }
+        public DateTime SaleDate { get; private set; }
+        public decimal TotalSaleAmount { get; private set; }
 
-        // Modificado para permitir a data de venda opcional
-        public Sale(string customerName, string branchName, List<SaleItem> items, DateTime? saleDate = null)
+        public Sale(string customerName, string branchName, List<SaleItem> items)
         {
+            if (string.IsNullOrWhiteSpace(branchName))
+                throw new ArgumentException("Branch name cannot be null or empty.");
+
+            if (string.IsNullOrWhiteSpace(customerName))
+                throw new ArgumentException("Customer name cannot be null or empty.");
+
+            if (items == null || !items.Any())
+                throw new ArgumentException("Sale must have at least one item.");
+
+            Id = Guid.NewGuid();
             CustomerName = customerName;
             BranchName = branchName;
             Items = items;
-            SaleDate = saleDate ?? DateTime.UtcNow;
             IsCancelled = false;
+            SaleNumber = GenerateSaleNumber();
+            SaleDate = DateTime.UtcNow;
+            CalculateTotalSaleAmount();
         }
 
         public void CancelSale()
         {
             IsCancelled = true;
-            // Log or trigger the event
-            // EventPublisher.Publish(new SaleCancelledEvent(this));
         }
 
         public void ApplyDiscounts()
         {
             foreach (var item in Items)
             {
-                item.ApplyDiscount();
+                if (item.Quantity >= 4)
+                {
+                    item.ApplyDiscount(0.20m); // Aplica 20% de desconto
+                }
             }
+            CalculateTotalSaleAmount();
+        }
+
+        private void CalculateTotalSaleAmount()
+        {
+            TotalSaleAmount = Items.Sum(item => (item.UnitPrice * item.Quantity) - item.Discount);
+        }
+
+        private string GenerateSaleNumber()
+        {
+            return $"S-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0, 8)}";
         }
     }
 }

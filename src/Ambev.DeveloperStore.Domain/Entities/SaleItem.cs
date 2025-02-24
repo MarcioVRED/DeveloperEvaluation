@@ -1,45 +1,54 @@
 ﻿using Ambev.DeveloperStore.Domain.Common;
+using System;
 
 namespace Ambev.DeveloperStore.Domain.Entities
 {
     public class SaleItem : BaseEntity
     {
+        public Guid Id { get; private set; }
         public Guid SaleId { get; private set; }
         public string ProductName { get; private set; }
         public int Quantity { get; private set; }
         public decimal UnitPrice { get; private set; }
         public decimal Discount { get; private set; }
         public bool IsCancelled { get; private set; }
-        public decimal TotalItemAmount => (Quantity * UnitPrice) - Discount;
+        public decimal TotalItemAmount { get; private set; }
 
         public SaleItem(Guid id, Guid saleId, string productName, int quantity, decimal unitPrice)
         {
+            if (quantity <= 0)
+                throw new ArgumentException("Quantity must be greater than zero.");
+
+            if (unitPrice <= 0)
+                throw new ArgumentException("Unit price must be greater than zero.");
+
             Id = id;
             SaleId = saleId;
             ProductName = productName;
             Quantity = quantity;
             UnitPrice = unitPrice;
-            Discount = 0m;
+            Discount = 0;
             IsCancelled = false;
+            CalculateTotalItemAmount();
         }
 
-        public void CancelItemSale()
+        public void ApplyDiscount(decimal percentage)
+        {
+            if (percentage < 0 || percentage > 1)
+                throw new ArgumentException("Discount percentage must be between 0 and 1.");
+
+            Discount = Quantity * UnitPrice * percentage;
+            CalculateTotalItemAmount();
+        }
+
+        public void CancelItem()
         {
             IsCancelled = true;
-            // Log or trigger the event
-            // EventPublisher.Publish(new SaleCancelledEvent(this));
         }
 
-        public void ApplyDiscount()
+        private void CalculateTotalItemAmount()
         {
-            if (Quantity >= 4 && Quantity <= 9)
-            {
-                Discount = 0.10m * (Quantity * UnitPrice); 
-            }
-            else if (Quantity >= 10 && Quantity <= 20)
-            {
-                Discount = 0.20m * (Quantity * UnitPrice); 
-            }
+            TotalItemAmount = (UnitPrice * Quantity) - Discount;
         }
     }
 }
