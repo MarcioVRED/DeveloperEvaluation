@@ -1,10 +1,10 @@
-using Ambev.DeveloperEvaluation.Domain.Enums;
-using Ambev.DeveloperEvaluation.Domain.Specifications;
-using Ambev.DeveloperEvaluation.Unit.Domain.Specifications.TestData;
+using Ambev.DeveloperStore.Domain.Enums;
+using Ambev.DeveloperStore.Domain.Specifications;
+using Ambev.DeveloperStore.Unit.Domain.Specifications.TestData;
 using FluentAssertions;
 using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Unit.Domain.Specifications
+namespace Ambev.DeveloperStore.Unit.Domain.Specifications
 {
     public class ActiveUserSpecificationTests
     {

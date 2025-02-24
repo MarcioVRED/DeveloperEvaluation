@@ -5,7 +5,7 @@ namespace Ambev.DeveloperStore.Application.Sales.GetSale;
 /// <summary>
 /// Command for retrieving a Sale by their ID
 /// </summary>
-public record GetSaleCommand : IRequest<CancelSaleResult>
+public record GetSaleCommand : IRequest<GetSaleResult>
 {
     /// <summary>
     /// The unique identifier of the Sale to retrieve

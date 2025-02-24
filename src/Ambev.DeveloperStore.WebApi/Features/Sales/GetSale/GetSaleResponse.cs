@@ -1,11 +1,11 @@
 using Ambev.DeveloperStore.Domain.Entities;
 
-namespace Ambev.DeveloperStore.Application.Sales.GetSale;
+namespace Ambev.DeveloperStore.WebApi.Features.Sales.GetSale;
 
 /// <summary>
-/// Response model for GetSale operation
+/// API response model for GetSale operation
 /// </summary>
-public class GetSaleResult
+public class GetSaleResponse
 {
     public Guid Id { get; set; }
     public DateTime SaleDate { get; set; }

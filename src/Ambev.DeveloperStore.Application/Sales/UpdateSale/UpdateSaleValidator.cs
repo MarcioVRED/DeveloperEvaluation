@@ -2,7 +2,6 @@
 
 namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
 {
-
     /// <summary>
     /// Validator for UpdateSaleCommand that defines validation rules for Sale creation command.
     /// </summary>
@@ -12,22 +11,44 @@ namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
         /// Initializes a new instance of the UpdateSaleCommandValidator with defined validation rules.
         /// </summary>
         /// <remarks>
-        /// Validation rules include:
-        /// - Email: Must be in valid format (using EmailValidator)
-        /// - Username: Required, must be between 3 and 50 characters
-        /// - Password: Must meet security requirements (using PasswordValidator)
-        /// - Phone: Must match international format (+X XXXXXXXXXX)
-        /// - Status: Cannot be set to Unknown
-        /// - Role: Cannot be set to None
+        /// Validation rules 
         /// </remarks>
         public UpdateSaleCommandValidator()
         {
-            //RuleFor(sale => sale.Branch.).SetValidator(new EmailValidator());
-            //RuleFor(sale => user.Username).NotEmpty().Length(3, 50);
-            //RuleFor(sale => user.Password).SetValidator(new PasswordValidator());
-            //RuleFor(sale => user.Phone).Matches(@"^\+?[1-9]\d{1,14}$");
-            //RuleFor(sale => user.Status).NotEqual(UserStatus.Unknown);
-            //RuleFor(sale => user.Role).NotEqual(UserRole.None);
+            RuleFor(sale => sale.SaleNumber)
+            .Must(SaleNumberValid)
+            .WithMessage("SaleNumber must be in the format yyyyMMdd-XXX, where 'XXX' is a sequential number.");
+
+            RuleFor(sale => sale.SaleDate)
+                .LessThanOrEqualTo(DateTime.Now)
+                .WithMessage("The sale date cannot be in the future.");
+
+            RuleFor(sale => sale.CustomerName)
+                .NotEmpty()
+                .Length(3, 100)
+                .WithMessage("Customer name must be between 3 and 100 characters.");
+
+            RuleFor(sale => sale.BranchName)
+                .NotEmpty()
+                .Length(3, 100)
+                .WithMessage("Branch name must be between 3 and 100 characters.");
+
+            RuleFor(sale => sale)
+                .Must(s => s.Items.Count > 4 || s.Items.All(item => item.Discount == 0))
+                .WithMessage("Discount is not allowed when the total number of items is 4 or less.");
+
+            RuleForEach(sale => sale.Items)
+                .ChildRules(items =>
+                {
+                    items.RuleFor(item => item.Quantity)
+                         .GreaterThan(0)
+                         .WithMessage("The product quantity cannot be zero.");
+                });
+        }
+        private bool SaleNumberValid(int saleNumber)
+        {
+            var saleNumberStr = saleNumber.ToString();
+            return saleNumberStr.Length == 8 && DateTime.TryParseExact(saleNumberStr, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _);
         }
     }
 }

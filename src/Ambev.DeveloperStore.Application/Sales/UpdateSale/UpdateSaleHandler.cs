@@ -29,7 +29,7 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
     /// <summary>
     /// Handles the UpdatedSaleCommand request
     /// </summary>
-    /// <param name="command">The CreateSale command</param>
+    /// <param name="command">The UpdateSale command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created saleDetails</returns>
     public async Task<UpdateSaleResult> Handle(UpdateSaleCommand command, CancellationToken cancellationToken)

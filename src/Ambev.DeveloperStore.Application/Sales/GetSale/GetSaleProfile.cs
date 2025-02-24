@@ -4,15 +4,15 @@ using Ambev.DeveloperStore.Domain.Entities;
 namespace Ambev.DeveloperStore.Application.Sales.GetSale;
 
 /// <summary>
-/// Profile for mapping between User entity and GetUserResponse
+/// Profile for mapping between Sale entity and GetSaleResponse
 /// </summary>
-public class CancelSaleProfile : Profile
+public class GetSaleProfile : Profile
 {
     /// <summary>
-    /// Initializes the mappings for GetUser operation
+    /// Initializes the mappings for GetSale operation
     /// </summary>
-    public CancelSaleProfile()
+    public GetSaleProfile()
     {
-        CreateMap<Sale, CancelSaleResult>();
+        CreateMap<Sale, GetSaleResult>();
     }
 }

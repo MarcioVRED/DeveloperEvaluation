@@ -6,14 +6,18 @@ namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
 {
     public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     {
-        public string Customer { get; set; }
-        public string Branch { get; set; }
+        public int SaleNumber { get; set; }
+        public DateTime SaleDate { get; set; }
+        public string CustomerName { get; set; }
+        public string BranchName { get; set; }
         public List<SaleItem> Items { get; set; }
-
-        public UpdateSaleCommand(string customer, string branch, List<SaleItem> items)
+        
+        public UpdateSaleCommand(int saleNumber, DateTime saleDate, string customerName, string branchName, List<SaleItem> items)
         {
-            Customer = customer;
-            Branch = branch;
+            SaleNumber = saleNumber;
+            SaleDate = saleDate;
+            CustomerName = customerName;
+            BranchName = branchName;
             Items = items;
         }
 
@@ -29,4 +33,4 @@ namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
         }
     }
 }
-}
+

@@ -5,7 +5,7 @@ namespace Ambev.DeveloperStore.WebApi.Features.Users.CreateUser;
 /// <summary>
 /// Represents a request to create a new user in the system.
 /// </summary>
-public class CreateSaleRequest
+public class CreateUserRequest
 {
     /// <summary>
     /// Gets or sets the username. Must be unique and contain only valid characters.

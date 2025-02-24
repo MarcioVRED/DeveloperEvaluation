@@ -34,7 +34,7 @@ namespace Ambev.DeveloperStore.Domain.Repositories
         /// <param name="id">The unique identifier of the sale</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>The sale if found, null otherwise</returns>
-        Task<Sale> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     }
 }

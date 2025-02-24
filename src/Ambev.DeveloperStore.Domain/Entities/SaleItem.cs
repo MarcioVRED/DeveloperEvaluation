@@ -4,7 +4,7 @@ namespace Ambev.DeveloperStore.Domain.Entities
 {
     public class SaleItem : BaseEntity
     {
-        public Guid SaleId { get; private set; };
+        public Guid SaleId { get; private set; }
         public string ProductName { get; private set; }
         public int Quantity { get; private set; }
         public decimal UnitPrice { get; private set; }

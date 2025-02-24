@@ -1,11 +1,11 @@
 using Ambev.DeveloperStore.Domain.Enums;
 
-namespace Ambev.DeveloperStore.WebApi.Features.Users.CreateUser;
+namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale;
 
 /// <summary>
 /// API response model for CreateUser operation
 /// </summary>
-public class CreateUserResponse
+public class UpdateSaleResponse
 {
     /// <summary>
     /// The unique identifier of the created user

@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Ambev.DeveloperStore.WebApi.Features.Sales.CreateSale.CreateSaleItem;
+namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale.UpdateSaleItem;
 
 /// <summary>
 /// Validator for CreateSaleItemRequest that defines validation rules for user creation.
 /// </summary>
-public class UpdateSaleItemRequestValidator : AbstractValidator<CreateSaleItemRequest>
+public class UpdateSaleItemRequestValidator : AbstractValidator<UpdateSaleItemRequest>
 {
     /// <summary>
     /// Initializes a new instance of the CreateSalItemRequestValidator with defined validation rules.

@@ -28,12 +28,12 @@ namespace Ambev.DeveloperStore.ORM.Repositories
                 return sale;
             }
 
-            public async Task<Sale> UpdateAsync(Guid id, Sale updatedSale, CancellationToken cancellationToken = default)
+            public async Task<Sale> UpdateAsync(Sale updatedSale, CancellationToken cancellationToken = default)
             {
-                var sale = await GetByIdAsync(id, cancellationToken);
+                var sale = await GetByIdAsync(updatedSale.Id, cancellationToken);
                 if (sale == null)
                 {
-                    return null; ;
+                    throw new KeyNotFoundException($"Sale with ID {updatedSale.Id} not found.");
                 }
 
                 _context.Sales.Update(sale);
@@ -59,7 +59,7 @@ namespace Ambev.DeveloperStore.ORM.Repositories
 
             public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
             {
-                return await _context.Sale.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+                return await _context.Sales.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
             }
 
         }

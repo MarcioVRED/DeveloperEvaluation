@@ -3,7 +3,7 @@ using Ambev.DeveloperStore.Domain.Enums;
 namespace Ambev.DeveloperStore.WebApi.Features.Sales.CreateSale;
 
 /// <summary>
-/// API response model for CreateUser operation
+/// API response model for CreateSale operation
 /// </summary>
 public class CreateSaleResponse
 {

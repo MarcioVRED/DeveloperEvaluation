@@ -1,14 +1,14 @@
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
-using Ambev.DeveloperEvaluation.Common.Security;
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Unit.Domain;
+using Ambev.DeveloperStore.Application.Users.CreateUser;
+using Ambev.DeveloperStore.Common.Security;
+using Ambev.DeveloperStore.Domain.Entities;
+using Ambev.DeveloperStore.Domain.Repositories;
+using Ambev.DeveloperStore.Unit.Domain;
 using AutoMapper;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Unit.Application;
+namespace Ambev.DeveloperStore.Unit.Application;
 
 /// <summary>
 /// Contains unit tests for the <see cref="CreateUserHandler"/> class.

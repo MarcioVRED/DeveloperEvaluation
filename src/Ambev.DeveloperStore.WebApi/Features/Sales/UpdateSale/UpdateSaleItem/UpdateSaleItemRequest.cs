@@ -1,9 +1,11 @@
-﻿namespace Ambev.DeveloperStore.WebApi.Features.Sales.CreateSale.CreateSaleItem;
+﻿using Ambev.DeveloperStore.Domain.Enums;
+
+namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale.UpdateSaleItem;
 
 /// <summary>
 /// Represents a request to create a new Item Sale
 /// </summary>
-public class CreateSaleItemRequest
+public class UpdateSaleItemRequest
 {
     public Guid SaleId { get; set; }
     public required string ProductName { get; set; }

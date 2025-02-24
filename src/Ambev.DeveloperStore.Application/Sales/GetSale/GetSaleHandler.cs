@@ -8,7 +8,7 @@ namespace Ambev.DeveloperStore.Application.Sales.GetSale;
 /// <summary>
 /// Handler for processing GetSaleCommand requests
 /// </summary>
-public class CancelSaleHandler : IRequestHandler<GetSaleCommand, CancelSaleResult>
+public class GetSaleHandler : IRequestHandler<GetSaleCommand, GetSaleResult>
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
@@ -19,7 +19,7 @@ public class CancelSaleHandler : IRequestHandler<GetSaleCommand, CancelSaleResul
     /// <param name="saleRepository">The Sale repository</param>
     /// <param name="mapper">The AutoMapper instance</param>
     /// <param name="validator">The validator for GetSaleCommand</param>
-    public CancelSaleHandler(
+    public GetSaleHandler(
         ISaleRepository saleRepository,
         IMapper mapper)
     {
@@ -33,7 +33,7 @@ public class CancelSaleHandler : IRequestHandler<GetSaleCommand, CancelSaleResul
     /// <param name="request">The GetSale command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The Sale details if found</returns>
-    public async Task<CancelSaleResult> Handle(GetSaleCommand request, CancellationToken cancellationToken)
+    public async Task<GetSaleResult> Handle(GetSaleCommand request, CancellationToken cancellationToken)
     {
         var validator = new GetSaleValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -45,6 +45,6 @@ public class CancelSaleHandler : IRequestHandler<GetSaleCommand, CancelSaleResul
         if (sale == null)
             throw new KeyNotFoundException($"Sale with ID {request.Id} not found");
 
-        return _mapper.Map<CancelSaleResult>(sale);
+        return _mapper.Map<GetSaleResult>(sale);
     }
 }
