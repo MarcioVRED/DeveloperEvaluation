@@ -1,14 +1,16 @@
-﻿using Xunit;
+﻿using System;
+using System.Collections.Generic;
+using Xunit;
 using Ambev.DeveloperStore.Domain.Entities;
 
-namespace DeveloperStore.Tests.Sales
+namespace Ambev.DeveloperStore.Unit.Domain.Entities
 {
     public class SalesTests
     {
         [Fact(DisplayName = "Should create a valid sale")]
         public void Should_Create_Valid_Sale()
         {
-            var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
+            var sale = new Sale("Marcio Martins", "Branch A", new List<SaleItem>
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
             }, DateTime.UtcNow);
@@ -24,7 +26,7 @@ namespace DeveloperStore.Tests.Sales
         [Fact(DisplayName = "Should throw exception when branchName is null or empty")]
         public void Should_Throw_Exception_When_BranchName_Is_Null_Or_Empty()
         {
-            Assert.Throws<ArgumentException>(() => new Sale("John Doe", "", new List<SaleItem>
+            Assert.Throws<ArgumentException>(() => new Sale("Marcio Martins", "", new List<SaleItem>
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
             }));
@@ -42,13 +44,13 @@ namespace DeveloperStore.Tests.Sales
         [Fact(DisplayName = "Should not create a sale with no items")]
         public void Should_Not_Create_Sale_With_No_Items()
         {
-            Assert.Throws<ArgumentException>(() => new Sale("John Doe", "Branch A", new List<SaleItem>()));
+            Assert.Throws<ArgumentException>(() => new Sale("Marcio Martins", "Branch A", new List<SaleItem>()));
         }
 
         [Fact(DisplayName = "Should cancel a sale")]
         public void Should_Cancel_Sale()
         {
-            var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
+            var sale = new Sale("Marcio Martins", "Branch A", new List<SaleItem>
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
             });
@@ -60,7 +62,7 @@ namespace DeveloperStore.Tests.Sales
         [Fact(DisplayName = "Should apply discounts correctly")]
         public void Should_Apply_Discounts_Correctly()
         {
-            var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
+            var sale = new Sale("Marcio Martins", "Branch A", new List<SaleItem>
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 10, 50m)
             });
@@ -73,7 +75,7 @@ namespace DeveloperStore.Tests.Sales
         [Fact(DisplayName = "Should not apply discount when quantity is less than 4")]
         public void Should_Not_Apply_Discount_When_Quantity_Is_Less_Than_4()
         {
-            var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
+            var sale = new Sale("Marcio Martins", "Branch A", new List<SaleItem>
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 2, 50m)
             });
@@ -86,7 +88,7 @@ namespace DeveloperStore.Tests.Sales
         [Fact(DisplayName = "Should calculate total sale amount correctly")]
         public void Should_Calculate_Total_Sale_Amount_Correctly()
         {
-            var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
+            var sale = new Sale("Marcio Martins", "Branch A", new List<SaleItem>
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 2, 100m),
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product B", 3, 50m)
