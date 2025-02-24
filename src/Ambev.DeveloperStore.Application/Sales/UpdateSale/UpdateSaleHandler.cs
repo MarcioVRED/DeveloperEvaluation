@@ -4,10 +4,10 @@ using FluentValidation;
 using Ambev.DeveloperStore.Domain.Repositories;
 using Ambev.DeveloperStore.Domain.Entities;
 
-namespace Ambev.DeveloperStore.Application.Sales.CreateSale;
+namespace Ambev.DeveloperStore.Application.Sales.UpdateSale;
 
 /// <summary>
-/// Handler for processing CreateSaleCommand requests
+/// Handler for processing UpdatedSaleCommand requests
 /// </summary>
 public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleResult>
 {
@@ -15,11 +15,11 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Initializes a new instance of CreateSaleHandler
+    /// Initializes a new instance of UpdatedSaleHandler
     /// </summary>
     /// <param name="saleRepository">The sale repository</param>
     /// <param name="mapper">The AutoMapper instance</param>
-    /// <param name="validator">The validator for CreateSaleCommand</param>
+    /// <param name="validator">The validator for UpdatedSaleCommand</param>
     public UpdateSaleHandler(ISaleRepository saleRepository, IMapper mapper)
     {
         _saleRepository = saleRepository;
@@ -27,14 +27,14 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
     }
 
     /// <summary>
-    /// Handles the CreateSaleCommand request
+    /// Handles the UpdatedSaleCommand request
     /// </summary>
     /// <param name="command">The CreateSale command</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The created saletails</returns>
+    /// <returns>The created saleDetails</returns>
     public async Task<UpdateSaleResult> Handle(UpdateSaleCommand command, CancellationToken cancellationToken)
     {
-        var validator = new CreateSaleCommandValidator();
+        var validator = new UpdateSaleCommandValidator();
         var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
         if (!validationResult.IsValid)
@@ -42,8 +42,8 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
 
         var sale = _mapper.Map<Sale>(command);
 
-        var createdSale = await _saleRepository.CreateAsync(sale, cancellationToken);
-        var result = _mapper.Map<UpdateSaleResult>(createdSale);
+        var updatedSale = await _saleRepository.UpdateAsync(sale, cancellationToken);
+        var result = _mapper.Map<UpdateSaleResult>(updatedSale);
         return result;
     }
 }

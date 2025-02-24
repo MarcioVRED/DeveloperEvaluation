@@ -9,6 +9,7 @@ namespace Ambev.DeveloperStore.Domain.Entities
         public int Quantity { get; private set; }
         public decimal UnitPrice { get; private set; }
         public decimal Discount { get; private set; }
+        public bool IsCancelled { get; private set; }
         public decimal TotalAmount => (Quantity * UnitPrice) - Discount;
 
         public SaleItem(int productId, string productName, int quantity, decimal unitPrice)
@@ -18,6 +19,14 @@ namespace Ambev.DeveloperStore.Domain.Entities
             Quantity = quantity;
             UnitPrice = unitPrice;
             Discount = 0m;
+            IsCancelled = false;
+        }
+
+        public void CancelItemSale()
+        {
+            IsCancelled = true;
+            // Log or trigger the event
+            // EventPublisher.Publish(new SaleCancelledEvent(this));
         }
 
         public void ApplyDiscount()

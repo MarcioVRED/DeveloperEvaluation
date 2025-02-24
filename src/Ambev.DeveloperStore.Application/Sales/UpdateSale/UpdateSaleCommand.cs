@@ -1,9 +1,8 @@
 ﻿using Ambev.DeveloperStore.Common.Validation;
 using MediatR;
 using Ambev.DeveloperStore.Domain.Entities;
-using FluentValidation;
 
-namespace Ambev.DeveloperStore.Application.Sales.CreateSale
+namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
 {
     public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     {
@@ -20,7 +19,7 @@ namespace Ambev.DeveloperStore.Application.Sales.CreateSale
 
         public ValidationResultDetail Validate()
         {
-            var validator = new CreateSaleCommandValidator();
+            var validator = new UpdateSaleCommandValidator();
             var result = validator.Validate(this);
             return new ValidationResultDetail
             {

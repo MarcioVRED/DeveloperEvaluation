@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Ambev.DeveloperStore.Domain.Entities;
 
-namespace Ambev.DeveloperStore.Application.Sales.CreateSale;
+namespace Ambev.DeveloperStore.Application.Sales.UpdateSale;
 
 /// <summary>
-/// Profile for mapping between User entity and CreateUserResponse
+/// Profile for mapping between Sale entity and UpdateSaleResponse
 /// </summary>
 public class UpdateSaleProfile : Profile
 {
     /// <summary>
-    /// Initializes the mappings for CreateUser operation
+    /// Initializes the mappings for UpdateSale operation
     /// </summary>
     public UpdateSaleProfile()
     {
