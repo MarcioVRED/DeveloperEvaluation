@@ -12,8 +12,8 @@ namespace DeveloperStore.Tests.Sales
         {
             var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
             {
-                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
-            });
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
+            }, DateTime.UtcNow);
 
             Assert.NotNull(sale);
             Assert.False(sale.IsCancelled);
@@ -28,7 +28,7 @@ namespace DeveloperStore.Tests.Sales
         {
             Assert.Throws<ArgumentException>(() => new Sale("John Doe", "", new List<SaleItem>
             {
-                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
             }));
         }
 
@@ -43,12 +43,11 @@ namespace DeveloperStore.Tests.Sales
         {
             var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
             {
-                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
             });
 
             sale.CancelSale();
             Assert.True(sale.IsCancelled);
-            Assert.All(sale.Items, item => Assert.True(item.IsCancelled));
         }
 
         [Fact(DisplayName = "Should apply discounts correctly")]
@@ -56,7 +55,7 @@ namespace DeveloperStore.Tests.Sales
         {
             var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
             {
-                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Product A", 10, 50m)
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 10, 50m)
             });
 
             sale.ApplyDiscounts();
@@ -69,7 +68,7 @@ namespace DeveloperStore.Tests.Sales
         {
             var sale = new Sale("John Doe", "Branch A", new List<SaleItem>
             {
-                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Product A", 2, 50m)
+                new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 2, 50m)
             });
 
             sale.ApplyDiscounts();

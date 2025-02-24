@@ -16,7 +16,7 @@ namespace Ambev.DeveloperStore.Domain.Entities
         public DateTime SaleDate { get; private set; }
         public decimal TotalSaleAmount { get; private set; }
 
-        public Sale(string customerName, string branchName, List<SaleItem> items)
+        public Sale(string customerName, string branchName, List<SaleItem> items, DateTime? saleDate = null)
         {
             if (string.IsNullOrWhiteSpace(branchName))
                 throw new ArgumentException("Branch name cannot be null or empty.");
@@ -33,7 +33,7 @@ namespace Ambev.DeveloperStore.Domain.Entities
             Items = items;
             IsCancelled = false;
             SaleNumber = GenerateSaleNumber();
-            SaleDate = DateTime.UtcNow;
+            SaleDate = saleDate ?? DateTime.UtcNow;
             CalculateTotalSaleAmount();
         }
 
