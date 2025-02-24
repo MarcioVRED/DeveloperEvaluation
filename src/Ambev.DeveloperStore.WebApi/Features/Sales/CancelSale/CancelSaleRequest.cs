@@ -1,12 +1,14 @@
-namespace Ambev.DeveloperStore.WebApi.Features.Sales.GetSale;
+﻿
+namespace Ambev.DeveloperStore.WebApi.Features.Sales.CancelSale;
 
 /// <summary>
-/// Request model for getting a sale by ID
+/// Represents a request to cancel a sale
 /// </summary>
-public class GetSaleRequest
+public class CancelSaleRequest
 {
     /// <summary>
     /// The unique identifier of the sale to retrieve
     /// </summary>
     public Guid Id { get; set; }
+
 }

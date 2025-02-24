@@ -1,5 +1,4 @@
-﻿using Ambev.DeveloperStore.Common.Security;
-using Ambev.DeveloperStore.Domain.Entities;
+﻿using Ambev.DeveloperStore.Domain.Entities;
 using Ambev.DeveloperStore.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
