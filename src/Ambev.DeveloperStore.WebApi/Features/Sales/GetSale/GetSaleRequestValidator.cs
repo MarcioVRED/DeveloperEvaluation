@@ -3,7 +3,7 @@ using FluentValidation;
 namespace Ambev.DeveloperStore.WebApi.Features.Sales.GetSale;
 
 /// <summary>
-/// Validator for GetUserRequest
+/// Validator for GetSaleRequest
 /// </summary>
 public class GetSaleRequestValidator : AbstractValidator<GetSaleRequest>
 {
@@ -14,6 +14,6 @@ public class GetSaleRequestValidator : AbstractValidator<GetSaleRequest>
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .WithMessage("User ID is required");
+            .WithMessage("Sale ID is required");
     }
 }

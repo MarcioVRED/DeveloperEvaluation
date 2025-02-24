@@ -9,7 +9,7 @@ namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale;
 public class UpdateSaleProfile : Profile
 {
     /// <summary>
-    /// Initializes the mappings for CreateSale feature
+    /// Initializes the mappings for UpdateSale feature
     /// </summary>
     public UpdateSaleProfile()
     {

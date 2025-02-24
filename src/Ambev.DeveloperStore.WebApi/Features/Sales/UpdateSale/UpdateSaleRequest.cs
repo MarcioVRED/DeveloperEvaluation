@@ -3,7 +3,7 @@
 namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale;
 
 /// <summary>
-/// Represents a request to create a new sale
+/// Represents a request to update a sale
 /// </summary>
 public class UpdateSaleRequest
 {
