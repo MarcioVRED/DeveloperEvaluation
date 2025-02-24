@@ -32,12 +32,13 @@ namespace Ambev.DeveloperStore.ORM.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    Username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                    SaleNumber = table.Column<int>(type: "integer", nullable: false),
+                    SaleDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    TotalValue = table.Column<decimal>(type: "numeric", nullable: false),
+                    BranchName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CustomerName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    IsCancelled = table.Column<bool>(type: "boolean", nullable: false),
+                    TotalSaleAmount = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,17 +49,16 @@ namespace Ambev.DeveloperStore.ORM.Migrations
                 name: "SalesItems",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    Username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                    SaleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    ProductName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "numeric", nullable: false),
+                    Discount = table.Column<decimal>(type: "numeric", nullable: true),
+                    IsCancelled = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SalesItems", x => x.Id);
+                    table.PrimaryKey("PK_SalesItems", x => x.ProductId);
                 });
         }
 

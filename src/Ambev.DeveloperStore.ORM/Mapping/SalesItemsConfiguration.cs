@@ -1,7 +1,10 @@
 ﻿using Ambev.DeveloperStore.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Ambev.DeveloperStore.ORM.Mapping
+namespace Ambev.DeveloperStore.ORM.Mapping;
+
+public class SalesItemConfiguration : IEntityTypeConfiguration<SaleItem>
 {
     public void Configure(EntityTypeBuilder<SaleItem> builder)
     {
@@ -9,19 +12,12 @@ namespace Ambev.DeveloperStore.ORM.Mapping
 
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Id).HasColumnType("uuid").HasDefaultValueSql("gen_random_uuid()");
-
-        builder.Property(u => u.Username).IsRequired().HasMaxLength(50);
-        builder.Property(u => u.Password).IsRequired().HasMaxLength(100);
-        builder.Property(u => u.Email).IsRequired().HasMaxLength(100);
-        builder.Property(u => u.Phone).HasMaxLength(20);
-
-        builder.Property(u => u.Status)
-            .HasConversion<string>()
-            .HasMaxLength(20);
-
-        builder.Property(u => u.Role)
-            .HasConversion<string>()
-            .HasMaxLength(20);
-
+        builder.Property(u => u.SaleId).IsRequired();
+        builder.Property(u => u.ProductName).IsRequired().HasMaxLength(100);
+        builder.Property(u => u.Quantity).IsRequired();
+        builder.Property(u => u.UnitPrice).IsRequired();
+        builder.Property(u => u.Discount);
+        builder.Property(u => u.IsCancelled).IsRequired();
+        builder.Property(u => u.TotalItemAmount).IsRequired();
     }
 }

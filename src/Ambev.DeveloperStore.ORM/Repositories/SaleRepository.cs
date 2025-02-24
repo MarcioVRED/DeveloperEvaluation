@@ -1,5 +1,7 @@
-﻿using Ambev.DeveloperStore.Domain.Entities;
+﻿using Ambev.DeveloperStore.Common.Security;
+using Ambev.DeveloperStore.Domain.Entities;
 using Ambev.DeveloperStore.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperStore.ORM.Repositories
 {
@@ -8,31 +10,53 @@ namespace Ambev.DeveloperStore.ORM.Repositories
         public class SaleRepository : ISaleRepository
         {
             private readonly List<Sale> _sales = new();
+            private readonly DefaultContext _context;
 
-            public void Add(Sale sale)
+            /// <summary>
+            /// Initializes a new instance of CancelRepository
+            /// </summary>
+            /// <param name="context">The database context</param>
+            public SaleRepository(DefaultContext context)
             {
-                _sales.Add(sale);
+                _context = context;
             }
 
-            public void Update(Sale sale)
+            public async Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken)
             {
-                var existingSale = _sales.FirstOrDefault(s => s.SaleId == sale.SaleId);
-                if (existingSale != null)
+                await _context.AddAsync(sale, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+                return sale;
+            }
+
+            public async Task<Sale> UpdateAsync(Guid id, Sale updatedSale, CancellationToken cancellationToken = default)
+            {
+                // Obtendo a venda existente pelo ID
+                var sale = await GetByIdAsync(id, cancellationToken);
+                if (sale == null)
                 {
-                    _sales.Remove(existingSale);
-                    _sales.Add(sale);
+                    return null; // ou você pode lançar uma exceção, por exemplo: throw new NotFoundException("Sale not found");
                 }
+
+                // Atualizando as propriedades da venda com os valores da venda atualizada
+                sale.UpdateDetails(updatedSale); // Aqui você poderia criar um método na entidade "Sale" que atualize as informações necessárias
+
+                // Marcando a venda como modificada
+                _context.Sales.Update(sale);
+
+                // Salvando as alterações no banco de dados
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return sale;
             }
 
-            public Sale GetById(int saleId)
+            public async Task<bool> CancelAsync(Guid id, CancellationToken cancellationToken = default)
             {
-                return _sales.FirstOrDefault(s => s.SaleId == saleId)!;
+                throw new NotImplementedException();
             }
 
-            // Lista todas as vendas
-            public List<Sale> GetAll()
+            public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
             {
-                return _sales;
+                return await _context.Sale.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
             }
         }
     }

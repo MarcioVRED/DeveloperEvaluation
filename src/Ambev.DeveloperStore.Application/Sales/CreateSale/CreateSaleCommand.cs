@@ -7,11 +7,11 @@ namespace Ambev.DeveloperStore.Application.Sales.CreateSale
 {
     public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     {
-        public Customer Customer { get; set; }
-        public Branch Branch { get; set; }
+        public string Customer { get; set; }
+        public string Branch { get; set; }
         public List<SaleItem> Items { get; set; }
 
-        public UpdateSaleCommand(Customer customer, Branch branch, List<SaleItem> items)
+        public UpdateSaleCommand(string customer, string branch, List<SaleItem> items)
         {
             Customer = customer;
             Branch = branch;

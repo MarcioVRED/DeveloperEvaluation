@@ -4,17 +4,18 @@ namespace Ambev.DeveloperStore.Domain.Entities
 {
     public class SaleItem : BaseEntity
     {
-        public int ProductId { get; private set; }
+        public Guid SaleId { get; private set; };
         public string ProductName { get; private set; }
         public int Quantity { get; private set; }
         public decimal UnitPrice { get; private set; }
         public decimal Discount { get; private set; }
         public bool IsCancelled { get; private set; }
-        public decimal TotalAmount => (Quantity * UnitPrice) - Discount;
+        public decimal TotalItemAmount => (Quantity * UnitPrice) - Discount;
 
-        public SaleItem(int productId, string productName, int quantity, decimal unitPrice)
+        public SaleItem(Guid id, Guid saleId, string productName, int quantity, decimal unitPrice)
         {
-            ProductId = productId;
+            Id = id;
+            SaleId = saleId;
             ProductName = productName;
             Quantity = quantity;
             UnitPrice = unitPrice;

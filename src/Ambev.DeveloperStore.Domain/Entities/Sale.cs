@@ -4,20 +4,20 @@ namespace Ambev.DeveloperStore.Domain.Entities
 {
     public class Sale : BaseEntity
     {
-        public int SaleId { get; private set; }
-        public DateTime Date { get; private set; }
-        public Customer Customer { get; private set; }
-        public Branch Branch { get; private set; }
+        public int SaleNumber { get; private set; }
+        public DateTime SaleDate { get; private set; }
+        public string CustomerName { get; private set; }
+        public string BranchName { get; private set; }
         public List<SaleItem> Items { get; private set; }
         public bool IsCancelled { get; private set; }
-        public decimal TotalAmount => Items.Sum(item => item.TotalAmount);
+        public decimal TotalSaleAmount => Items.Sum(item => item.TotalItemAmount);
 
-        public Sale(Customer customer, Branch branch, List<SaleItem> items)
+        public Sale(string customerName, string branchName, List<SaleItem> items)
         {
-            Customer = customer;
-            Branch = branch;
+            CustomerName = customerName;
+            BranchName = branchName;
             Items = items;
-            Date = DateTime.Now;
+            SaleDate = DateTime.UtcNow;
             IsCancelled = false;
         }
 

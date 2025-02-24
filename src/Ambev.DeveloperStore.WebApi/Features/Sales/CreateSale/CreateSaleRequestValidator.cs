@@ -2,7 +2,7 @@
 using Ambev.DeveloperStore.Domain.Validation;
 using FluentValidation;
 
-namespace Ambev.DeveloperStore.WebApi.Features.Users.CreateUser;
+namespace Ambev.DeveloperStore.WebApi.Features.Sales.CreateSale;
 
 /// <summary>
 /// Validator for CreateUserRequest that defines validation rules for user creation.

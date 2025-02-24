@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Ambev.DeveloperStore.WebApi.Common;
+using Ambev.DeveloperStore.Application.Sales.CreateSale;
+using Ambev.DeveloperStore.Application.Sales.GetSale;
+using Ambev.DeveloperStore.Application.Sales.UpdateSale;
+using Ambev.DeveloperStore.Application.Sales.CancelSale;
 using Ambev.DeveloperStore.WebApi.Features.Users.CreateUser;
-using Ambev.DeveloperStore.WebApi.Features.Users.GetUser;
-using Ambev.DeveloperStore.WebApi.Features.Users.DeleteUser;
-using Ambev.DeveloperStore.Application.Users.CreateUser;
-using Ambev.DeveloperStore.Application.Users.GetUser;
-using Ambev.DeveloperStore.Application.Users.DeleteUser;
 
 namespace Ambev.DeveloperStore.WebApi.Features.Users;
 
@@ -16,17 +15,17 @@ namespace Ambev.DeveloperStore.WebApi.Features.Users;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : BaseController
+public class SalesController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
     /// <summary>
-    /// Initializes a new instance of UsersController
+    /// Initializes a new instance of SalesController
     /// </summary>
     /// <param name="mediator">The mediator instance</param>
     /// <param name="mapper">The AutoMapper instance</param>
-    public UsersController(IMediator mediator, IMapper mapper)
+    public SalesController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
@@ -41,36 +40,36 @@ public class UsersController : BaseController
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateUser([FromBody] CreateSaleRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateSale([FromBody] CreateSaleRequest request, CancellationToken cancellationToken)
     {
-        var validator = new CreateUserRequestValidator();
+        var validator = new CreateSaleRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<CreateUserCommand>(request);
+        var command = _mapper.Map<CreateSaleCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Created(string.Empty, new ApiResponseWithData<CreateSaleResponse>
         {
             Success = true,
-            Message = "User created successfully",
+            Message = "Sale created successfully",
             Data = _mapper.Map<CreateSaleResponse>(response)
         });
     }
 
     /// <summary>
-    /// Retrieves a user by their ID
+    /// Retrieves a sale by their ID
     /// </summary>
-    /// <param name="id">The unique identifier of the user</param>
+    /// <param name="id">The unique identifier of the sale</param>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>The user details if found</returns>
+    /// <returns>The sale details if found</returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ApiResponseWithData<GetUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetSaleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetUser([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetSale([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var request = new GetUserRequest { Id = id };
         var validator = new GetUserRequestValidator();
@@ -79,14 +78,14 @@ public class UsersController : BaseController
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
-        var command = _mapper.Map<GetUserCommand>(request.Id);
+        var command = _mapper.Map<GetSaleCommand>(request.Id);
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(new ApiResponseWithData<GetUserResponse>
         {
             Success = true,
-            Message = "User retrieved successfully",
-            Data = _mapper.Map<GetUserResponse>(response)
+            Message = "Sale retrieved successfully",
+            Data = _mapper.Map<GetSaleResponse>(response)
         });
     }
 
