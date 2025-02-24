@@ -13,7 +13,7 @@ namespace Ambev.DeveloperStore.ORM.Repositories
             private readonly DefaultContext _context;
 
             /// <summary>
-            /// Initializes a new instance of CancelRepository
+            /// Initializes a new instance of SalesRepository
             /// </summary>
             /// <param name="context">The database context</param>
             public SaleRepository(DefaultContext context)
@@ -58,6 +58,7 @@ namespace Ambev.DeveloperStore.ORM.Repositories
             {
                 return await _context.Sale.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
             }
+
         }
     }
 

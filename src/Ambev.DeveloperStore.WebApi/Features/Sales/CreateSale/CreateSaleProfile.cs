@@ -1,5 +1,5 @@
 using AutoMapper;
-using Ambev.DeveloperStore.Application.Users.CreateUser;
+using Ambev.DeveloperStore.Application.Sales.CreateSale;
 
 namespace Ambev.DeveloperStore.WebApi.Features.Sales.CreateSale;
 

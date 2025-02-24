@@ -1,17 +1,16 @@
 ﻿using Ambev.DeveloperStore.Common.Validation;
 using MediatR;
 using Ambev.DeveloperStore.Domain.Entities;
-using FluentValidation;
 
 namespace Ambev.DeveloperStore.Application.Sales.CreateSale
 {
-    public class UpdateSaleCommand : IRequest<UpdateSaleResult>
+    public class CreateSaleCommand : IRequest<CreateSaleResult>
     {
         public string Customer { get; set; }
         public string Branch { get; set; }
         public List<SaleItem> Items { get; set; }
 
-        public UpdateSaleCommand(string customer, string branch, List<SaleItem> items)
+        public CreateSaleCommand(string customer, string branch, List<SaleItem> items)
         {
             Customer = customer;
             Branch = branch;
