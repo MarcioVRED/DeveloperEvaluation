@@ -34,11 +34,11 @@ namespace Ambev.DeveloperStore.Domain.Entities
         {
             if (Quantity >= 4 && Quantity <= 9)
             {
-                Discount = 0.10m * (Quantity * UnitPrice); // 10% discount
+                Discount = 0.10m * (Quantity * UnitPrice); 
             }
             else if (Quantity >= 10 && Quantity <= 20)
             {
-                Discount = 0.20m * (Quantity * UnitPrice); // 20% discount
+                Discount = 0.20m * (Quantity * UnitPrice); 
             }
         }
     }

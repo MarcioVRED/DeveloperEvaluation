@@ -6,14 +6,18 @@ namespace Ambev.DeveloperStore.Application.Sales.CreateSale
 {
     public class CreateSaleCommand : IRequest<CreateSaleResult>
     {
-        public string Customer { get; set; }
-        public string Branch { get; set; }
+        public int SaleNumber { get; set; }
+        public DateTime SaleDate { get; set; }
+        public string CustomerName { get; set; }
+        public string BranchName { get; set; }
         public List<SaleItem> Items { get; set; }
 
-        public CreateSaleCommand(string customer, string branch, List<SaleItem> items)
+        public CreateSaleCommand(int saleNumber,DateTime saleDate, string customerName, string branchName, List<SaleItem> items)
         {
-            Customer = customer;
-            Branch = branch;
+            SaleNumber = saleNumber;
+            SaleDate = saleDate;
+            CustomerName = customerName;
+            BranchName = branchName;
             Items = items;
         }
 

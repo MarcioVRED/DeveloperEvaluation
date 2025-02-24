@@ -12,12 +12,13 @@ namespace Ambev.DeveloperStore.Domain.Entities
         public bool IsCancelled { get; private set; }
         public decimal TotalSaleAmount => Items.Sum(item => item.TotalItemAmount);
 
-        public Sale(string customerName, string branchName, List<SaleItem> items)
+        // Modificado para permitir a data de venda opcional
+        public Sale(string customerName, string branchName, List<SaleItem> items, DateTime? saleDate = null)
         {
             CustomerName = customerName;
             BranchName = branchName;
             Items = items;
-            SaleDate = DateTime.UtcNow;
+            SaleDate = saleDate ?? DateTime.UtcNow;
             IsCancelled = false;
         }
 
