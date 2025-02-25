@@ -27,6 +27,7 @@ Exemplo de Requisição:
   "email": "marcio.martins@email.com",
   "password": "senha123"
 }
+```
 
 Exemplo de Resposta:
 
@@ -36,6 +37,7 @@ Exemplo de Resposta:
   "name": "Marcio Martins",
   "email": "marcio.martins@email.com"
 }
+```
 
 🛒 Criando uma Venda
 
