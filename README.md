@@ -1,5 +1,5 @@
 # Developer Store API
-=====================
+===========================
 
 Este projeto é uma API para gerenciamento de vendas e clientes na Developer Store. A API cria usuários, registra vendas e aplica descontos automaticamente.
 
