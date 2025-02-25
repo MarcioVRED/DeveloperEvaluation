@@ -137,6 +137,35 @@ Caso o saleDate não seja enviado na requisição, a API automaticamente assume 
 
 Vendas canceladas não podem ser revertidas.
 
+▶️ **Como Executar o Projeto**
+###Executando Localmente
+
+1. Clone o repositório:
+```sh
+git clone https://github.com/seu-repositorio/ambev-developer-store-api.git
+cd ambev-developer-store-api
+```
+2. Instale as dependências e execute o projeto:
+```sh
+dotnet restore
+dotnet run
+```
+3. A API estará disponível em http://localhost:5000.
+
+###Executando com Docker
+
+1. Certifique-se de ter o Docker instalado.
+2. No diretório do projeto, execute:
+```sh
+docker-compose up --build
+```
+3. A API estará acessível em http://localhost:5000.
+
+Caso precise parar a execução, utilize:
+```sh
+docker-compose down
+```
+
 🛠 **Tecnologias Utilizadas**
 
 .NET 8
