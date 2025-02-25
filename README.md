@@ -3,17 +3,17 @@
 
 Este projeto é uma API para gerenciamento de vendas e clientes na Developer Store. A API cria usuários, registra vendas e aplica descontos automaticamente.
 
-##🚀 Como Utilizar a API
+🚀 Como Utilizar a API
 
 A API segue uma estrutura RESTful e aceita requisições no formato JSON.
 
-##🔐 Autenticação
+🔐 Autenticação
 
 A API pode requerer autenticação via token (caso implementado). Para acessar endpoints protegidos, utilize um token JWT no header Authorization:
 
 Authorization: Bearer <seu_token>
 
-##🧑 Criando um Usuário
+🧑 Criando um Usuário
 
 POST /api/users
 
@@ -27,7 +27,6 @@ Exemplo de Requisição:
   "email": "marcio.martins@email.com",
   "password": "senha123"
 }
-```json
 
 Exemplo de Resposta:
 
@@ -37,9 +36,8 @@ Exemplo de Resposta:
   "name": "Marcio Martins",
   "email": "marcio.martins@email.com"
 }
-```
 
-🛒 ##Criando uma Venda##
+🛒 Criando uma Venda
 
 POST /api/sales
 
@@ -59,7 +57,7 @@ Exemplo de Requisição:
 }
 ```
 
-##📌 Regras de Desconto:
+📌 Regras de Desconto:
 
 Se a quantidade de um item for maior ou igual a 4, aplica-se um desconto de 20% no valor total desse item.
 
@@ -71,7 +69,7 @@ Cerveja Pilsen: 10 unidades × R$5,00 = R$50,00 → Desconto 20% (-R$10,00) → 
 
 Refrigerante Cola: 3 unidades × R$7,50 = R$22,50 (sem desconto)
 
-##💰 Total da Venda: R$62,50
+💰 Total da Venda: R$62,50
 
 Exemplo de Resposta:
 
@@ -90,7 +88,7 @@ Exemplo de Resposta:
 }
 ```
 
-##❌ Cancelando uma Venda
+❌ Cancelando uma Venda
 
 PUT /api/sales/{id}/cancel
 
@@ -116,7 +114,7 @@ Retorna todas as vendas registradas.
 
 Exemplo de Resposta:
 
-```
+```json
 [
   {
     "id": "ad3f913d-8c56-4e75-b9a8-7e21c6a24a9d",
@@ -127,6 +125,7 @@ Exemplo de Resposta:
     "totalSaleAmount": 62.50
   }
 ]
+```
 
 📌 ##Considerações
 
@@ -136,7 +135,7 @@ Caso o saleDate não seja enviado na requisição, a API automaticamente assume 
 
 Vendas canceladas não podem ser revertidas.
 
-🛠 ##Tecnologias Utilizadas
+🛠 Tecnologias Utilizadas
 
 .NET 8
 
