@@ -1,6 +1,6 @@
-Ambev Developer Store API
+Developer Store API
 
-Este projeto é em uma API para gerenciamento de vendas e clientes na Developer Store. A API cria usuários, registra vendas e aplica descontos automaticamente.
+Este projeto é uma API para gerenciamento de vendas e clientes na Developer Store. A API cria usuários, registra vendas e aplica descontos automaticamente.
 
 🚀 Como Utilizar a API
 
@@ -52,7 +52,7 @@ Exemplo de Requisição:
   ]
 }
 
-📌 Regras de desconto:
+📌 Regras de Desconto:
 
 Se a quantidade de um item for maior ou igual a 4, aplica-se um desconto de 20% no valor total desse item.
 
@@ -133,3 +133,4 @@ Entity Framework Core
 XUnit (Testes automatizados)
 
 Docker (opcional para banco de dados PostgreSQL)
+
