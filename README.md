@@ -27,6 +27,7 @@ Exemplo de Requisição:
   "email": "marcio.martins@email.com",
   "password": "senha123"
 }
+```json
 
 Exemplo de Resposta:
 
@@ -36,6 +37,7 @@ Exemplo de Resposta:
   "name": "Marcio Martins",
   "email": "marcio.martins@email.com"
 }
+```json
 
 ##🛒 Criando uma Venda
 
@@ -55,6 +57,7 @@ Exemplo de Requisição:
     { "productId": "a1f3c77d-5f5d-4c3e-9c88-bd3a81fcb2c0", "productName": "Refrigerante", "quantity": 3, "unitPrice": 7.50 }
   ]
 }
+```json
 
 ##📌 Regras de Desconto:
 
@@ -85,6 +88,7 @@ Exemplo de Resposta:
   ],
   "totalSaleAmount": 62.50
 }
+```json
 
 ##❌ Cancelando uma Venda
 
@@ -102,6 +106,7 @@ Exemplo de Resposta:
 {
   "message": "Sale successfully cancelled."
 }
+```json
 
 ##📜 Listando Vendas
 
@@ -122,6 +127,7 @@ Exemplo de Resposta:
     "totalSaleAmount": 62.50
   }
 ]
+```json
 
 ##📌 Considerações
 
