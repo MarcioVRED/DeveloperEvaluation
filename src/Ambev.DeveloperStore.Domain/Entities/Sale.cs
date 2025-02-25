@@ -7,7 +7,6 @@ namespace Ambev.DeveloperStore.Domain.Entities
 {
     public class Sale : BaseEntity
     {
-        public Guid Id { get; private set; }
         public string CustomerName { get; private set; }
         public string BranchName { get; private set; }
         public List<SaleItem> Items { get; private set; }
@@ -48,7 +47,7 @@ namespace Ambev.DeveloperStore.Domain.Entities
             {
                 if (item.Quantity >= 4)
                 {
-                    item.ApplyDiscount(0.20m); // Aplica 20% de desconto
+                    item.ApplyDiscount(0.20m); 
                 }
             }
             CalculateTotalSaleAmount();
@@ -61,7 +60,7 @@ namespace Ambev.DeveloperStore.Domain.Entities
 
         private string GenerateSaleNumber()
         {
-            return $"S-{DateTime.UtcNow:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0, 8)}";
+            return $"S-{DateTime.UtcNow:yyyyMMddHHmmss}{Guid.NewGuid().ToString().Substring(0, 8)}";
         }
     }
 }

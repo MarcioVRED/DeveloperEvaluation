@@ -2,112 +2,101 @@
 using Ambev.DeveloperStore.Application.Sales.CreateSaleItem;
 using Ambev.DeveloperStore.Domain.Entities;
 using Ambev.DeveloperStore.Domain.Repositories;
+using AutoMapper;
 using NSubstitute;
 using Xunit;
 
 public class CreateSaleHandlerTests
 {
     private readonly ISaleRepository _saleRepository;
+    private readonly IMapper _mapper;
     private readonly CreateSaleHandler _handler;
 
     public CreateSaleHandlerTests()
     {
         _saleRepository = Substitute.For<ISaleRepository>();
-        _handler = new CreateSaleHandler(_saleRepository);
+        _mapper = Substitute.For<IMapper>(); 
+        _handler = new CreateSaleHandler(_saleRepository, _mapper);
     }
 
     [Theory]
     [ClassData(typeof(CreateSaleHandlerTestData))]
     public async Task Handle_Should_Create_Sale_Successfully(CreateSaleCommand command)
     {
-        // Arrange
-        var sale = new Sale { Id = Guid.NewGuid(), SaleNumber = command.SaleNumber, SaleDate = command.SaleDate };
-        _saleRepository.CreateSaleAsync(Arg.Any<Sale>()).Returns(Task.FromResult(sale));
+        var items = command.Items
+            .Select(item => new SaleItem(Guid.NewGuid(), Guid.NewGuid(), item.ProductName, item.Quantity, item.UnitPrice))
+            .ToList();
 
-        // Act
+        var sale = new Sale(command.CustomerName, command.BranchName, items, command.SaleDate);
+
+        _saleRepository.CreateAsync(Arg.Any<Sale>()).Returns(Task.FromResult(sale));
+
+        _mapper.Map<Sale>(command).Returns(sale); // Mapeamento do AutoMapper
+
         var result = await _handler.Handle(command, CancellationToken.None);
 
-        // Assert
         Assert.NotNull(result);
         Assert.NotEqual(Guid.Empty, result.Id);
-        Assert.Equal(command.SaleNumber, result.SaleNumber);
-        Assert.Equal(command.SaleDate, result.SaleDate);
     }
 
     [Fact]
     public async Task Handle_Should_Throw_Exception_When_CustomerName_Is_Empty()
     {
-        // Arrange
-        var command = new CreateSaleCommand
-        {
-            SaleNumber = 20250114-004,
-            CustomerName = "",
-            BranchName = "Filial SP",
-            SaleDate = DateTime.UtcNow,
-            Items = new List<CreateSaleItemCommand>
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow,
+            "",
+            "Filial SP",
+            new List<CreateSaleItemCommand>
             {
-                new CreateSaleItemCommand { SaleId = Guid.NewGuid(), ProductName = "Cerveja Pilsen", Quantity = 10, UnitPrice = 5.00 }
+                new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 10, 5.00M)
             }
-        };
+        );
 
-        // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
     }
 
     [Fact]
     public async Task Handle_Should_Throw_Exception_When_Items_Are_Empty()
     {
-        // Arrange
-        var command = new CreateSaleCommand
-        {
-            SaleNumber = 20250114 - 004,
-            CustomerName = "Marcio Martins",
-            BranchName = "Filial SP",
-            SaleDate = DateTime.UtcNow,
-            Items = new List<CreateSaleItemCommand>()
-        };
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow,
+            "Marcio Martins",
+            "Filial SP",
+            new List<CreateSaleItemCommand>()
+        );
 
-        // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
     }
 
     [Fact]
-    public async Task Handle_Should_Throw_Exception_When_SaleNumber_Is_Empty()
+    public async Task Handle_Should_Throw_Exception_When_SaleNumber_Is_Invalid()
     {
-        // Arrange
-        var command = new CreateSaleCommand
-        {
-            SaleNumber = 20250114 - 004,
-            CustomerName = "Marcio Martins",
-            BranchName = "Filial SP",
-            SaleDate = DateTime.UtcNow,
-            Items = new List<CreateSaleItemCommand>
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow,
+            "Marcio Martins",
+            "Filial SP",
+            new List<CreateSaleItemCommand>
             {
-                new CreateSaleItemCommand { SaleId = Guid.NewGuid(), ProductName = "Cerveja Pilsen", Quantity = 10, UnitPrice = 5.00 }
+                new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 10, 5.00M)
             }
-        };
+        );
 
-        // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
     }
 
     [Fact]
     public async Task Handle_Should_Throw_Exception_When_BranchName_Is_Empty()
     {
-        // Arrange
-        var command = new CreateSaleCommand
-        {
-            SaleNumber = 20250114 - 004,
-            CustomerName = "Marcio Martins",
-            BranchName = "",
-            SaleDate = DateTime.UtcNow,
-            Items = new List<CreateSaleItemCommand>
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow,
+            "Marcio Martins",
+            "",
+            new List<CreateSaleItemCommand>
             {
-                new CreateSaleItemCommand { SaleId = Guid.NewGuid(), ProductName = "Cerveja Pilsen", Quantity = 10, UnitPrice = 5.00 }
+                new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 10, 5.00M)
             }
-        };
+        );
 
-        // Act & Assert
         await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
     }
 }

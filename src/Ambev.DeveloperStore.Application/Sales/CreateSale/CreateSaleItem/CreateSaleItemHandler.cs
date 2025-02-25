@@ -40,10 +40,10 @@ public class CreateSaleItemHandler : IRequestHandler<CreateSaleItemCommand, Crea
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var sale = _mapper.Map<Sale>(command);
+        var saleItem = _mapper.Map<SaleItem>(command);
 
-        var createdSale = await _saleRepository.CreateAsync(sale, cancellationToken);
-        var result = _mapper.Map<CreateSaleItemResult>(createdSale);
+        var createdSaleItem = await _saleRepository.CreateItemAsync(saleItem, cancellationToken);
+        var result = _mapper.Map<CreateSaleItemResult>(createdSaleItem);
         return result;
     }
 }

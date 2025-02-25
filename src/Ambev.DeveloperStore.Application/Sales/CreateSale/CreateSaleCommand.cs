@@ -1,20 +1,18 @@
-﻿using Ambev.DeveloperStore.Common.Validation;
+﻿ using Ambev.DeveloperStore.Common.Validation;
 using MediatR;
-using Ambev.DeveloperStore.Domain.Entities;
+using Ambev.DeveloperStore.Application.Sales.CreateSaleItem;
 
 namespace Ambev.DeveloperStore.Application.Sales.CreateSale
 {
     public class CreateSaleCommand : IRequest<CreateSaleResult>
     {
-        public int SaleNumber { get; set; }
         public DateTime SaleDate { get; set; }
         public string CustomerName { get; set; }
         public string BranchName { get; set; }
-        public List<SaleItem> Items { get; set; }
+        public List<CreateSaleItemCommand> Items { get; }
 
-        public CreateSaleCommand(int saleNumber,DateTime saleDate, string customerName, string branchName, List<SaleItem> items)
-        {
-            SaleNumber = saleNumber;
+        public CreateSaleCommand(DateTime saleDate, string customerName, string branchName, List<CreateSaleItemCommand> items)
+        { 
             SaleDate = saleDate;
             CustomerName = customerName;
             BranchName = branchName;

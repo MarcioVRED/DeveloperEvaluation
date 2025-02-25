@@ -27,6 +27,13 @@ namespace Ambev.DeveloperStore.ORM.Repositories
                 return sale;
             }
 
+            public async Task<SaleItem> CreateItemAsync(SaleItem saleItem, CancellationToken cancellationToken)
+            {
+                await _context.AddAsync(saleItem, cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
+                return saleItem;
+            }
+
             public async Task<Sale> UpdateAsync(Sale updatedSale, CancellationToken cancellationToken = default)
             {
                 var sale = await GetByIdAsync(updatedSale.Id, cancellationToken);

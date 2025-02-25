@@ -7,7 +7,6 @@ namespace Ambev.DeveloperStore.WebApi.Features.Sales.CreateSale;
 /// </summary>
 public class CreateSaleRequest
 {
-    public int SaleNumber { get; set; }
     public DateTime SaleDate { get; set; }
     public required string CustomerName { get; set; }
     public required string BranchName { get; set; }

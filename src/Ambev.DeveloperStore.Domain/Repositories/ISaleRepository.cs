@@ -13,6 +13,14 @@ namespace Ambev.DeveloperStore.Domain.Repositories
         Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Creates a new saleItem in the repository
+        /// </summary>
+        /// <param name="saleItem">The saleItem to create</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>The created saleItem</returns>
+        Task<SaleItem> CreateItemAsync(SaleItem saleItem, CancellationToken cancellationToken);
+
+        /// <summary>
         /// Updated a sale from the repository
         /// </summary>
         /// <param name="id">The unique identifier of the sale to update</param>

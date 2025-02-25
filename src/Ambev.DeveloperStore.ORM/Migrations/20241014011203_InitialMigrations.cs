@@ -32,7 +32,7 @@ namespace Ambev.DeveloperStore.ORM.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
-                    SaleNumber = table.Column<int>(type: "integer", nullable: false),
+                    SaleNumber = table.Column<int>(type: "long", nullable: false),
                     SaleDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     TotalValue = table.Column<decimal>(type: "numeric", nullable: false),
                     BranchName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),

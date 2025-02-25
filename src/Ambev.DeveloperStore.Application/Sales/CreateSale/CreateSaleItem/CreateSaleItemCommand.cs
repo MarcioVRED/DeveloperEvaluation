@@ -6,19 +6,16 @@ namespace Ambev.DeveloperStore.Application.Sales.CreateSaleItem
     public class CreateSaleItemCommand : IRequest<CreateSaleItemResult>
     {
         public Guid SaleId { get; set; }
-        public required string ProductName { get; set; }
+        public string ProductName { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
-        public decimal Discount { get; set; }
 
-        public CreateSaleItemCommand(Guid saleId, string productName, int quantity,decimal unitPrice, decimal discount)
+        public CreateSaleItemCommand(Guid saleId, string productName, int quantity,decimal unitPrice)
         {
             SaleId = saleId;
             ProductName = productName;
             Quantity = quantity;
             UnitPrice = unitPrice;
-            Discount = discount;
-
         }
 
         public ValidationResultDetail Validate()

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using Ambev.DeveloperStore.Application.Sales.CreateSale;
 using Ambev.DeveloperStore.Application.Sales.CreateSaleItem;
-using Ambev.DeveloperStore.Domain.Entities; // Add this import
 
 public class CreateSaleHandlerTestData : IEnumerable<object[]>
 {
@@ -13,14 +10,13 @@ public class CreateSaleHandlerTestData : IEnumerable<object[]>
         {
             new CreateSaleCommand
             (
-                saleNumber: 20250112-002,
                 saleDate: DateTime.UtcNow,
                 customerName: "Marcio Martins",
                 branchName: "Filial SP",
-                items: new List<SaleItem> // Change CreateSaleItemCommand to SaleItem
+                items: new List<CreateSaleItemCommand>
                 {
-                    new CreateSaleItemCommand { SaleId = Guid.NewGuid(), ProductName = "Cerveja Pilsen", Quantity = 10, UnitPrice = 5.00M, Discount = 0M },
-                    new CreateSaleItemCommand { SaleId = Guid.NewGuid(), ProductName = "Refrigerante Cola", Quantity = 3, UnitPrice = 7.50M, Discount = 0M }
+                    new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 10, 5.00M),
+                    new CreateSaleItemCommand(Guid.NewGuid(), "Refrigerante Cola", 3, 7.50M)
                 }
             )
         };
@@ -29,14 +25,13 @@ public class CreateSaleHandlerTestData : IEnumerable<object[]>
         {
             new CreateSaleCommand
             (
-                saleNumber: 20250112-003,
                 saleDate: DateTime.UtcNow,
                 customerName: "Carlos Souza",
                 branchName: "Filial RJ",
-                items: new List<SaleItem> // Change CreateSaleItemCommand to SaleItem
+                items: new List<CreateSaleItemCommand>
                 {
-                    new SaleItem { ProductId = Guid.NewGuid(), ProductName = "Cerveja IPA", Quantity = 5, UnitPrice = 6.50M, Discount = 0M },
-                    new SaleItem { ProductId = Guid.NewGuid(), ProductName = "Refrigerante Guaraná", Quantity = 2, UnitPrice = 6.00M, Discount = 0M }
+                    new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja IPA", 5, 6.50M),
+                    new CreateSaleItemCommand(Guid.NewGuid(), "Refrigerante Guaraná", 2, 6.00M)
                 }
             )
         };
