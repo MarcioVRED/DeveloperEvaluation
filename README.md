@@ -1,18 +1,18 @@
-Developer Store API
+#Developer Store API
 
 Este projeto é uma API para gerenciamento de vendas e clientes na Developer Store. A API cria usuários, registra vendas e aplica descontos automaticamente.
 
-🚀 Como Utilizar a API
+##🚀 Como Utilizar a API
 
 A API segue uma estrutura RESTful e aceita requisições no formato JSON.
 
-🔐 Autenticação
+##🔐 Autenticação
 
 A API pode requerer autenticação via token (caso implementado). Para acessar endpoints protegidos, utilize um token JWT no header Authorization:
 
 Authorization: Bearer <seu_token>
 
-🧑 Criando um Usuário
+##🧑 Criando um Usuário
 
 POST /api/users
 
@@ -20,6 +20,7 @@ Cria um novo usuário no sistema.
 
 Exemplo de Requisição:
 
+```json
 {
   "name": "Marcio Martins",
   "email": "marcio.martins@email.com",
@@ -28,13 +29,14 @@ Exemplo de Requisição:
 
 Exemplo de Resposta:
 
+```json
 {
   "id": "b1f9c89a-8e3f-4b7b-b0e7-c6a1c3b30db7",
   "name": "Marcio Martins",
   "email": "marcio.martins@email.com"
 }
 
-🛒 Criando uma Venda
+##🛒 Criando uma Venda
 
 POST /api/sales
 
@@ -42,6 +44,7 @@ Registra uma nova venda no sistema.
 
 Exemplo de Requisição:
 
+```json
 {
   "customerName": "Marcio Martins",
   "branchName": "Filial SP",
@@ -52,7 +55,7 @@ Exemplo de Requisição:
   ]
 }
 
-📌 Regras de Desconto:
+##📌 Regras de Desconto:
 
 Se a quantidade de um item for maior ou igual a 4, aplica-se um desconto de 20% no valor total desse item.
 
@@ -64,10 +67,11 @@ Cerveja Pilsen: 10 unidades × R$5,00 = R$50,00 → Desconto 20% (-R$10,00) → 
 
 Refrigerante Cola: 3 unidades × R$7,50 = R$22,50 (sem desconto)
 
-💰 Total da Venda: R$62,50
+##💰 Total da Venda: R$62,50
 
 Exemplo de Resposta:
 
+```json
 {
   "id": "ad3f913d-8c56-4e75-b9a8-7e21c6a24a9d",
   "customerName": "Marcio Martins",
@@ -81,7 +85,7 @@ Exemplo de Resposta:
   "totalSaleAmount": 62.50
 }
 
-❌ Cancelando uma Venda
+##❌ Cancelando uma Venda
 
 PUT /api/sales/{id}/cancel
 
@@ -93,11 +97,12 @@ PUT /api/sales/ad3f913d-8c56-4e75-b9a8-7e21c6a24a9d/cancel
 
 Exemplo de Resposta:
 
+```json
 {
   "message": "Sale successfully cancelled."
 }
 
-📜 Listando Vendas
+##📜 Listando Vendas
 
 GET /api/sales
 
@@ -105,6 +110,7 @@ Retorna todas as vendas registradas.
 
 Exemplo de Resposta:
 
+```json
 [
   {
     "id": "ad3f913d-8c56-4e75-b9a8-7e21c6a24a9d",
@@ -116,7 +122,7 @@ Exemplo de Resposta:
   }
 ]
 
-📌 Considerações
+##📌 Considerações
 
 A API possui validações para garantir que uma venda não seja criada sem itens e que os campos obrigatórios não estejam vazios.
 
@@ -124,7 +130,7 @@ Caso o saleDate não seja enviado na requisição, a API automaticamente assume 
 
 Vendas canceladas não podem ser revertidas.
 
-🛠 Tecnologias Utilizadas
+##🛠 Tecnologias Utilizadas
 
 .NET 8
 
