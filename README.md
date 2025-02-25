@@ -138,7 +138,7 @@ Caso o saleDate não seja enviado na requisição, a API automaticamente assume 
 Vendas canceladas não podem ser revertidas.
 
 ▶️ **Como Executar o Projeto**
-###Executando Localmente
+### Executando Localmente
 
 1. Clone o repositório:
 ```sh
@@ -152,7 +152,7 @@ dotnet run
 ```
 3. A API estará disponível em http://localhost:5000.
 
-###Executando com Docker
+### Executando com Docker
 
 1. Certifique-se de ter o Docker instalado.
 2. No diretório do projeto, execute:
