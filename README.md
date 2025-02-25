@@ -3,17 +3,17 @@
 
 Este projeto é uma API para gerenciamento de vendas e clientes na Developer Store. A API cria usuários, registra vendas e aplica descontos automaticamente.
 
-🚀 Como Utilizar a API
+🚀 **Como Utilizar a API**
 
 A API segue uma estrutura RESTful e aceita requisições no formato JSON.
 
-🔐 Autenticação
+🔐 **Autenticação**
 
 A API pode requerer autenticação via token (caso implementado). Para acessar endpoints protegidos, utilize um token JWT no header Authorization:
 
 Authorization: Bearer <seu_token>
 
-🧑 Criando um Usuário
+🧑 **Criando um Usuário**
 
 POST /api/users
 
@@ -39,7 +39,7 @@ Exemplo de Resposta:
 }
 ```
 
-🛒 Criando uma Venda
+🛒 **Criando uma Venda**
 
 POST /api/sales
 
@@ -59,7 +59,7 @@ Exemplo de Requisição:
 }
 ```
 
-📌 Regras de Desconto:
+📌 **Regras de Desconto**
 
 Se a quantidade de um item for maior ou igual a 4, aplica-se um desconto de 20% no valor total desse item.
 
@@ -83,14 +83,14 @@ Exemplo de Resposta:
   "saleDate": "2024-02-24T10:00:00Z",
   "isCancelled": false,
   "items": [
-    { "productName": "Cerveja Pilsen", "quantity": 10, "unitPrice": 5.00, "discount": 10.00, "totalItemAmount": 40.00 },
-    { "productName": "Refrigerante Cola", "quantity": 3, "unitPrice": 7.50, "discount": 0.00, "totalItemAmount": 22.50 }
+    { "productName": "Cerveja IPA", "quantity": 10, "unitPrice": 5.00, "discount": 10.00, "totalItemAmount": 40.00 },
+    { "productName": "Refrigerante", "quantity": 3, "unitPrice": 7.50, "discount": 0.00, "totalItemAmount": 22.50 }
   ],
   "totalSaleAmount": 62.50
 }
 ```
 
-❌ Cancelando uma Venda
+❌ **Cancelando uma Venda**
 
 PUT /api/sales/{id}/cancel
 
@@ -108,7 +108,7 @@ Exemplo de Resposta:
 }
 ```
 
-##📜 Listando Vendas
+##📜 **Listando Vendas**
 
 GET /api/sales
 
@@ -129,7 +129,7 @@ Exemplo de Resposta:
 ]
 ```
 
-📌 ##Considerações
+📌 **Considerações**
 
 A API possui validações para garantir que uma venda não seja criada sem itens e que os campos obrigatórios não estejam vazios.
 
@@ -137,7 +137,7 @@ Caso o saleDate não seja enviado na requisição, a API automaticamente assume 
 
 Vendas canceladas não podem ser revertidas.
 
-🛠 Tecnologias Utilizadas
+🛠 **Tecnologias Utilizadas**
 
 .NET 8
 
