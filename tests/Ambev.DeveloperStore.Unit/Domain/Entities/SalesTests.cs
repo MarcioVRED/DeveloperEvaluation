@@ -96,5 +96,18 @@ namespace Ambev.DeveloperStore.Unit.Domain.Entities
 
             Assert.Equal(350m, sale.TotalSaleAmount);
         }
+
+        [Fact(DisplayName = "Should throw an exception when sale exceeds the maximum allowed items")]
+        public void Should_ThrowException_When_SaleExceedsMaximumAllowedItems()
+        {
+            var productId = Guid.NewGuid();
+            var saleId = Guid.NewGuid();
+
+            Assert.Throws<ArgumentException>(() =>
+                new SaleItem(productId, saleId, "Product X", 21, 10.0m)
+            );
+        }
+
+
     }
 }

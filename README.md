@@ -1,86 +1,135 @@
-# Developer Evaluation Project
+Ambev Developer Store API
 
-`READ CAREFULLY`
+Este projeto é em uma API para gerenciamento de vendas e clientes na Developer Store. A API cria usuários, registra vendas e aplica descontos automaticamente.
 
-## Instructions
-**The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**
+🚀 Como Utilizar a API
 
-- The code must be versioned in a public Github repository and a link must be sent for evaluation once completed
-- Upload this template to your repository and start working from it
-- Read the instructions carefully and make sure all requirements are being addressed
-- The repository must provide instructions on how to configure, execute and test the project
-- Documentation and overall organization will also be taken into consideration
+A API segue uma estrutura RESTful e aceita requisições no formato JSON.
 
-## Use Case
-**You are a developer on the DeveloperStore team. Now we need to implement the API prototypes.**
+🔐 Autenticação
 
-As we work with `DDD`, to reference entities from other domains, we use the `External Identities` pattern with denormalization of entity descriptions.
+A API pode requerer autenticação via token (caso implementado). Para acessar endpoints protegidos, utilize um token JWT no header Authorization:
 
-Therefore, you will write an API (complete CRUD) that handles sales records. The API needs to be able to inform:
+Authorization: Bearer <seu_token>
 
-* Sale number
-* Date when the sale was made
-* Customer
-* Total sale amount
-* Branch where the sale was made
-* Products
-* Quantities
-* Unit prices
-* Discounts
-* Total amount for each item
-* Cancelled/Not Cancelled
+🧑 Criando um Usuário
 
-It's not mandatory, but it would be a differential to build code for publishing events of:
-* SaleCreated
-* SaleModified
-* SaleCancelled
-* ItemCancelled
+POST /api/users
 
-If you write the code, **it's not required** to actually publish to any Message Broker. You can log a message in the application log or however you find most convenient.
+Cria um novo usuário no sistema.
 
-### Business Rules
+Exemplo de Requisição:
 
-* Purchases above 4 identical items have a 10% discount
-* Purchases between 10 and 20 identical items have a 20% discount
-* It's not possible to sell above 20 identical items
-* Purchases below 4 items cannot have a discount
+{
+  "name": "Marcio Martins",
+  "email": "marcio.martins@email.com",
+  "password": "senha123"
+}
 
-These business rules define quantity-based discounting tiers and limitations:
+Exemplo de Resposta:
 
-1. Discount Tiers:
-   - 4+ items: 10% discount
-   - 10-20 items: 20% discount
+{
+  "id": "b1f9c89a-8e3f-4b7b-b0e7-c6a1c3b30db7",
+  "name": "Marcio Martins",
+  "email": "marcio.martins@email.com"
+}
 
-2. Restrictions:
-   - Maximum limit: 20 items per product
-   - No discounts allowed for quantities below 4 items
+🛒 Criando uma Venda
 
-## Overview
-This section provides a high-level overview of the project and the various skills and competencies it aims to assess for developer candidates. 
+POST /api/sales
 
-See [Overview](/.doc/overview.md)
+Registra uma nova venda no sistema.
 
-## Tech Stack
-This section lists the key technologies used in the project, including the backend, testing, frontend, and database components. 
+Exemplo de Requisição:
 
-See [Tech Stack](/.doc/tech-stack.md)
+{
+  "customerName": "Marcio Martins",
+  "branchName": "Filial SP",
+  "saleDate": "2024-02-24T10:00:00Z",
+  "items": [
+    { "productId": "e2b2e9c6-1a7c-4d8e-913f-834c2dfeb0bd", "productName": "Cerveja Pilsen", "quantity": 10, "unitPrice": 5.00 },
+    { "productId": "a1f3c77d-5f5d-4c3e-9c88-bd3a81fcb2c0", "productName": "Refrigerante", "quantity": 3, "unitPrice": 7.50 }
+  ]
+}
 
-## Frameworks
-This section outlines the frameworks and libraries that are leveraged in the project to enhance development productivity and maintainability. 
+📌 Regras de desconto:
 
-See [Frameworks](/.doc/frameworks.md)
+Se a quantidade de um item for maior ou igual a 4, aplica-se um desconto de 20% no valor total desse item.
 
-<!-- 
-## API Structure
-This section includes links to the detailed documentation for the different API resources:
-- [API General](./docs/general-api.md)
-- [Products API](/.doc/products-api.md)
-- [Carts API](/.doc/carts-api.md)
-- [Users API](/.doc/users-api.md)
-- [Auth API](/.doc/auth-api.md)
--->
+Caso contrário, o item não recebe desconto.
 
-## Project Structure
-This section describes the overall structure and organization of the project files and directories. 
+Cálculo esperado:
 
-See [Project Structure](/.doc/project-structure.md)
+Cerveja Pilsen: 10 unidades × R$5,00 = R$50,00 → Desconto 20% (-R$10,00) → R$40,00
+
+Refrigerante Cola: 3 unidades × R$7,50 = R$22,50 (sem desconto)
+
+💰 Total da Venda: R$62,50
+
+Exemplo de Resposta:
+
+{
+  "id": "ad3f913d-8c56-4e75-b9a8-7e21c6a24a9d",
+  "customerName": "Marcio Martins",
+  "branchName": "Filial SP",
+  "saleDate": "2024-02-24T10:00:00Z",
+  "isCancelled": false,
+  "items": [
+    { "productName": "Cerveja Pilsen", "quantity": 10, "unitPrice": 5.00, "discount": 10.00, "totalItemAmount": 40.00 },
+    { "productName": "Refrigerante Cola", "quantity": 3, "unitPrice": 7.50, "discount": 0.00, "totalItemAmount": 22.50 }
+  ],
+  "totalSaleAmount": 62.50
+}
+
+❌ Cancelando uma Venda
+
+PUT /api/sales/{id}/cancel
+
+Cancela uma venda já registrada.
+
+Exemplo de Requisição:
+
+PUT /api/sales/ad3f913d-8c56-4e75-b9a8-7e21c6a24a9d/cancel
+
+Exemplo de Resposta:
+
+{
+  "message": "Sale successfully cancelled."
+}
+
+📜 Listando Vendas
+
+GET /api/sales
+
+Retorna todas as vendas registradas.
+
+Exemplo de Resposta:
+
+[
+  {
+    "id": "ad3f913d-8c56-4e75-b9a8-7e21c6a24a9d",
+    "customerName": "Marcio Martins",
+    "branchName": "Filial SP",
+    "saleDate": "2024-02-24T10:00:00Z",
+    "isCancelled": false,
+    "totalSaleAmount": 62.50
+  }
+]
+
+📌 Considerações
+
+A API possui validações para garantir que uma venda não seja criada sem itens e que os campos obrigatórios não estejam vazios.
+
+Caso o saleDate não seja enviado na requisição, a API automaticamente assume a data atual.
+
+Vendas canceladas não podem ser revertidas.
+
+🛠 Tecnologias Utilizadas
+
+.NET 8
+
+Entity Framework Core
+
+XUnit (Testes automatizados)
+
+Docker (opcional para banco de dados PostgreSQL)

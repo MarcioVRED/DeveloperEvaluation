@@ -18,6 +18,9 @@ namespace Ambev.DeveloperStore.Domain.Entities
             if (quantity <= 0)
                 throw new ArgumentException("Quantity must be greater than zero.");
 
+            if (quantity > 20)
+                throw new ArgumentException("It's not possible to sell above 20 identical items.");
+
             if (unitPrice <= 0)
                 throw new ArgumentException("Unit price must be greater than zero.");
 
