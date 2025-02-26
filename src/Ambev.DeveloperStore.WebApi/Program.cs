@@ -6,6 +6,7 @@ using Ambev.DeveloperStore.Common.Validation;
 using Ambev.DeveloperStore.IoC;
 using Ambev.DeveloperStore.ORM;
 using Ambev.DeveloperStore.WebApi.Middleware;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -50,10 +51,15 @@ public class Program
                 );
             });
 
+            builder.Services.AddValidatorsFromAssemblies(
+                new[] { typeof(ApplicationLayer).Assembly }
+            );
+
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();
+
 
             if (app.Environment.IsDevelopment())
             {

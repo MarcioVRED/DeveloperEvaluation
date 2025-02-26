@@ -8,7 +8,7 @@ namespace Ambev.DeveloperStore.Application.Sales.CancelSale;
 /// <summary>
 /// Handler for processing CancelSaleCommand requests
 /// </summary>
-public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleResponse>
+public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleResult>
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
@@ -33,7 +33,7 @@ public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleRe
     /// <param name="request">The CancelSale command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The Sale details if found</returns>
-    public async Task<CancelSaleResponse> Handle(CancelSaleCommand request, CancellationToken cancellationToken)
+    public async Task<CancelSaleResult> Handle(CancelSaleCommand request, CancellationToken cancellationToken)
     {
         var validator = new CancelSaleValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -50,6 +50,6 @@ public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleRe
         if (!success)
             throw new KeyNotFoundException($"Sale with ID {request.Id} not found");
 
-        return new CancelSaleResponse { Success = true };
+        return new CancelSaleResult { Id = request.Id };
     }
 }

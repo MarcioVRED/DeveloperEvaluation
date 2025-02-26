@@ -4,7 +4,7 @@ using Ambev.DeveloperStore.Domain.Entities;
 namespace Ambev.DeveloperStore.Application.Sales.UpdateSale;
 
 /// <summary>
-/// Profile for mapping between Sale entity and UpdateSaleResponse
+/// Profile for mapping between Sale entity and UpdateSaleResult
 /// </summary>
 public class UpdateSaleProfile : Profile
 {

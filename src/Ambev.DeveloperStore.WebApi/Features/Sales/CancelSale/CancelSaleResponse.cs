@@ -1,5 +1,5 @@
 
-namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale;
+namespace Ambev.DeveloperStore.WebApi.Features.Sales.CancelSale;
 
 /// <summary>
 /// API response model for CancelSale operation
@@ -7,7 +7,7 @@ namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale;
 public class CancelSaleResponse
 {
     /// <summary>
-    /// Indicates whether the cancel was successful
+    /// The unique identifier of the sale to cancel
     /// </summary>
-    public bool Success { get; set; }
+    public Guid Id { get; set; }
 }

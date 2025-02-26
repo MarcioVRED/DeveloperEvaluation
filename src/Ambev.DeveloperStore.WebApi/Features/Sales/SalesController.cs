@@ -9,8 +9,9 @@ using Ambev.DeveloperStore.Application.Sales.CancelSale;
 using Ambev.DeveloperStore.WebApi.Features.Sales.GetSale;
 using Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale;
 using Ambev.DeveloperStore.WebApi.Features.Sales.CreateSale;
+using Ambev.DeveloperStore.WebApi.Features.Sales.CancelSale;
 
-namespace Ambev.DeveloperStore.WebApi.Features.Users;
+namespace Ambev.DeveloperStore.WebApi.Features.Sales;
 
 /// <summary>
 /// Controller for managing user operations
@@ -34,7 +35,7 @@ public class SalesController : BaseController
     }
 
     /// <summary>
-    /// Creates a new user
+    /// Creates a new sale
     /// </summary>
     /// <param name="request">The user creation request</param>
     /// <param name="cancellationToken">Cancellation token</param>
@@ -113,11 +114,41 @@ public class SalesController : BaseController
         var command = _mapper.Map<UpdateSaleCommand>(request.Id);
         var response = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponseWithData<Sales.UpdateSale.CancelSaleResponse>
+        return Ok(new ApiResponseWithData<Sales.UpdateSale.UpdateSaleResponse>
         {
             Success = true,
             Message = "Sale updated successfully",
-            Data = _mapper.Map<Sales.UpdateSale.CancelSaleResponse>(response)
+            Data = _mapper.Map<UpdateSaleResponse>(response)
         });
     }
+
+    /// <summary>
+    /// Cancels a sale by its ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the sale to cancel</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success response if the sale was canceled</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CancelSale([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var request = new CancelSaleRequest { Id = id };
+        var validator = new CancelSaleRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<CancelSaleCommand>(request);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponse
+        {
+            Success = true,
+            Message = "Sale canceled successfully"
+        });
+    }
+
 }

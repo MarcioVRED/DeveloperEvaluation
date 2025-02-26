@@ -1,5 +1,4 @@
 using Ambev.DeveloperStore.Domain.Entities;
-using Ambev.DeveloperStore.Domain.Enums;
 
 namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale;
 

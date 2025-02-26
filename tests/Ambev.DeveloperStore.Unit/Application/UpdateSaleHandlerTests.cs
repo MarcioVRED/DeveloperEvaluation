@@ -7,7 +7,6 @@ using NSubstitute;
 using FluentAssertions;
 using Xunit;
 using FluentValidation;
-using Ambev.DeveloperStore.Application.Sales.CreateSale;
 
 namespace Ambev.DeveloperStore.Unit.Application;
 

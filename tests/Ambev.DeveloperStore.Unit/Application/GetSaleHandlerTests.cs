@@ -36,11 +36,11 @@ public class GetSaleHandlerTests
         {
             Id = sale.Id,
             SaleDate = sale.SaleDate,
-            Customer = sale.CustomerName,
-            Branch = sale.BranchName,
+            CustomerName = sale.CustomerName,
+            BranchName = sale.BranchName,
             Items = sale.Items,
             IsCancelled = sale.IsCancelled,
-            TotalAmount = sale.TotalSaleAmount
+            TotalSaleAmount = sale.TotalSaleAmount
         };
 
         _saleRepository.GetByIdAsync(sale.Id).Returns(sale);
@@ -79,11 +79,11 @@ public class GetSaleHandlerTests
         {
             Id = sale.Id,
             SaleDate = sale.SaleDate,
-            Customer = sale.CustomerName,
-            Branch = sale.BranchName,
+            CustomerName = sale.CustomerName,
+            BranchName = sale.BranchName,
             Items = sale.Items,
             IsCancelled = sale.IsCancelled,
-            TotalAmount = sale.TotalSaleAmount
+            TotalSaleAmount = sale.TotalSaleAmount
         };
 
         _saleRepository.GetByIdAsync(sale.Id).Returns(sale);
