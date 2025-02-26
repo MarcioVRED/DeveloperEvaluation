@@ -7,6 +7,7 @@ using NSubstitute;
 using FluentAssertions;
 using Xunit;
 using FluentValidation;
+using System.ComponentModel;
 
 namespace Ambev.DeveloperStore.Unit.Application;
 
@@ -23,7 +24,7 @@ public class CreateSaleHandlerTests
         _handler = new CreateSaleHandler(_saleRepository, _mapper);
     }
 
-    [Theory]
+    [Theory, DisplayName("Handle should create sale successfully")]
     [ClassData(typeof(CreateSaleHandlerTestData))]
     public async Task Handle_Should_Create_Sale_Successfully(CreateSaleCommand command)
     {
@@ -49,7 +50,7 @@ public class CreateSaleHandlerTests
         await _saleRepository.Received(1).CreateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>());
     }
 
-    [Fact]
+    [Fact, DisplayName("Handle should throw exception when customer name is too short")]
     public async Task Handle_Should_Throw_Exception_When_CustomerName_Is_LessThan()
     {
         var command = new CreateSaleCommand(
@@ -66,7 +67,7 @@ public class CreateSaleHandlerTests
         Assert.Contains("Customer name must be between 3 and 100 characters", exception.Message);
     }
 
-    [Fact]
+    [Fact, DisplayName("Handle should throw exception when customer name is null")]
     public async Task Handle_Should_Throw_Exception_When_CustomerName_Is_Null()
     {
         var command = new CreateSaleCommand(
@@ -83,7 +84,7 @@ public class CreateSaleHandlerTests
         Assert.Contains("Customer name cannot be null.", exception.Message);
     }
 
-    [Fact]
+    [Fact, DisplayName("Handle should throw exception when branch name is null")]
     public async Task Handle_Should_Throw_Exception_When_BranchName_Is_Null()
     {
         var command = new CreateSaleCommand(
@@ -100,7 +101,7 @@ public class CreateSaleHandlerTests
         Assert.Contains("Branch name cannot be null.", exception.Message);
     }
 
-    [Fact]
+    [Fact, DisplayName("Handle should throw exception when branch name is too short")]
     public async Task Handle_Should_Throw_Exception_When_BranchName_Is_LessThan()
     {
         var command = new CreateSaleCommand(
@@ -117,7 +118,7 @@ public class CreateSaleHandlerTests
         Assert.Contains("Branch name must be between 3 and 100 characters.", exception.Message);
     }
 
-    [Fact]
+    [Fact, DisplayName("Handle should throw exception when product quantity is zero")]
     public async Task Handle_Should_Throw_Exception_When_Product_Quantity_Is_Zero()
     {
         var command = new CreateSaleCommand(
@@ -134,7 +135,7 @@ public class CreateSaleHandlerTests
         Assert.Contains("The product quantity cannot be zero.", exception.Message);
     }
 
-    [Fact]
+    [Fact, DisplayName("Handle should throw exception when sale date is in the future")]
     public async Task Handle_Should_Throw_Exception_When_SaleDate_Is_In_Future()
     {
         var command = new CreateSaleCommand(
@@ -151,14 +152,14 @@ public class CreateSaleHandlerTests
         Assert.Contains("The sale date cannot be in the future.", exception.Message);
     }
 
-    [Fact]
+    [Fact, DisplayName("Handle should throw exception when item list is empty")]
     public async Task Handle_Should_Throw_Exception_When_Items_List_Is_Empty()
     {
         var command = new CreateSaleCommand(
             DateTime.UtcNow.AddDays(-1),
             "Marcio Martins",
             "Filial SP",
-            new List<CreateSaleItemCommand>() // Lista vazia
+            new List<CreateSaleItemCommand>()
         );
 
         var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
