@@ -1,18 +1,19 @@
 ﻿using Ambev.DeveloperStore.Common.Validation;
 using MediatR;
 using Ambev.DeveloperStore.Domain.Entities;
+using Ambev.DeveloperStore.Application.Sales.UpdateSaleItem;
 
 namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
 {
     public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     {
-        public int SaleNumber { get; set; }
+        public string SaleNumber { get; set; }
         public DateTime SaleDate { get; set; }
         public string CustomerName { get; set; }
         public string BranchName { get; set; }
-        public List<SaleItem> Items { get; set; }
+        public List<UpdateSaleItemCommand> Items { get; set; }
         
-        public UpdateSaleCommand(int saleNumber, DateTime saleDate, string customerName, string branchName, List<SaleItem> items)
+        public UpdateSaleCommand(string saleNumber, DateTime saleDate, string customerName, string branchName, List<UpdateSaleItemCommand> items)
         {
             SaleNumber = saleNumber;
             SaleDate = saleDate;

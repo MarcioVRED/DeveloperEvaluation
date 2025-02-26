@@ -9,7 +9,7 @@ namespace Ambev.DeveloperStore.Application.Sales.CreateSaleItem
     public class CreateSaleItemCommandValidator : AbstractValidator<CreateSaleItemCommand>
     {
         /// <summary>
-        /// Initializes a new instance of the CreateSaleItemCommandValidator with defined validation rules.
+        /// Initializes a new instance of the UpdateSaleItemCommandValidator with defined validation rules.
         /// </summary>
         /// <remarks>
         /// Validation rules 

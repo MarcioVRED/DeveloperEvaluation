@@ -23,9 +23,6 @@ namespace Ambev.DeveloperStore.Domain.Entities
             if (string.IsNullOrWhiteSpace(customerName))
                 throw new ArgumentException("Customer name cannot be null or empty.");
 
-            if (items == null || !items.Any())
-                throw new ArgumentException("Sale must have at least one item.");
-
             Id = Guid.NewGuid();
             CustomerName = customerName;
             BranchName = branchName;

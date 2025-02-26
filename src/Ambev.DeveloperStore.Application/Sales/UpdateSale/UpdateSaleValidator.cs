@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿ using FluentValidation;
 
 namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
 {
@@ -33,9 +33,9 @@ namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
                 .Length(3, 100)
                 .WithMessage("Branch name must be between 3 and 100 characters.");
 
-            RuleFor(sale => sale)
-                .Must(s => s.Items.Count > 4 || s.Items.All(item => item.Discount == 0))
-                .WithMessage("Discount is not allowed when the total number of items is 4 or less.");
+            RuleFor(sale => sale.Items)
+                .NotEmpty()
+                .WithMessage("Sale must have at least one item.");
 
             RuleForEach(sale => sale.Items)
                 .ChildRules(items =>
@@ -45,10 +45,11 @@ namespace Ambev.DeveloperStore.Application.Sales.UpdateSale
                          .WithMessage("The product quantity cannot be zero.");
                 });
         }
-        private bool SaleNumberValid(int saleNumber)
+        private bool SaleNumberValid(string saleNumber)
         {
-            var saleNumberStr = saleNumber.ToString();
-            return saleNumberStr.Length == 8 && DateTime.TryParseExact(saleNumberStr, "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _);
+            var parts = saleNumber.Split('-');
+            if (parts.Length != 2 || parts[1].Length != 3) return false;
+            return DateTime.TryParseExact(parts[0], "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out _);
         }
     }
 }

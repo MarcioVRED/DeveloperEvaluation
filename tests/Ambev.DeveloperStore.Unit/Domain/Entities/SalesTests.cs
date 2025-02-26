@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
+﻿using Xunit;
 using Ambev.DeveloperStore.Domain.Entities;
 
 namespace Ambev.DeveloperStore.Unit.Domain.Entities
@@ -39,12 +37,6 @@ namespace Ambev.DeveloperStore.Unit.Domain.Entities
             {
                 new SaleItem(Guid.NewGuid(), Guid.NewGuid(), "Product A", 5, 100m)
             }));
-        }
-
-        [Fact(DisplayName = "Should not create a sale with no items")]
-        public void Should_Not_Create_Sale_With_No_Items()
-        {
-            Assert.Throws<ArgumentException>(() => new Sale("Marcio Martins", "Branch A", new List<SaleItem>()));
         }
 
         [Fact(DisplayName = "Should cancel a sale")]

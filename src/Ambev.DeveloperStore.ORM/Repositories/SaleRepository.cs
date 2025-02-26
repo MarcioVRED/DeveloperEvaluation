@@ -65,7 +65,12 @@ namespace Ambev.DeveloperStore.ORM.Repositories
 
             public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
             {
-                return await _context.Sales.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+                var sale = await _context.Sales.FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+                if (sale == null)
+                {
+                    throw new KeyNotFoundException($"Sale with ID {id} not found.");
+                }
+                return sale;
             }
 
         }

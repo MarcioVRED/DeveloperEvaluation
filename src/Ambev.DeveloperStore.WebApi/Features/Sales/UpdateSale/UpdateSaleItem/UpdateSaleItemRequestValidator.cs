@@ -3,12 +3,12 @@
 namespace Ambev.DeveloperStore.WebApi.Features.Sales.UpdateSale.UpdateSaleItem;
 
 /// <summary>
-/// Validator for CreateSaleItemRequest that defines validation rules for user creation.
+/// Validator for UpdateSaleItemRequest that defines validation rules for Sale Item creation.
 /// </summary>
 public class UpdateSaleItemRequestValidator : AbstractValidator<UpdateSaleItemRequest>
 {
     /// <summary>
-    /// Initializes a new instance of the CreateSalItemRequestValidator with defined validation rules.
+    /// Initializes a new instance of the UpdateSalItemRequestValidator with defined validation rules.
     /// </summary>
     /// <remarks>
     /// Validation rules
