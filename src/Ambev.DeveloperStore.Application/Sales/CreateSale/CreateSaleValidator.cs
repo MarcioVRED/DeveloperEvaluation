@@ -34,6 +34,10 @@ namespace Ambev.DeveloperStore.Application.Sales.CreateSale
                 .Length(3, 100)
                 .WithMessage("Branch name must be between 3 and 100 characters.");
 
+            RuleFor(sale => sale.Items)
+                .NotEmpty()
+                .WithMessage("Sale must have at least one item.");
+
             RuleForEach(sale => sale.Items)
                 .ChildRules(items =>
                 {

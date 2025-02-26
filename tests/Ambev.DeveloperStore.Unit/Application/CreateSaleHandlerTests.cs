@@ -116,4 +116,52 @@ public class CreateSaleHandlerTests
         var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
         Assert.Contains("Branch name must be between 3 and 100 characters.", exception.Message);
     }
+
+    [Fact]
+    public async Task Handle_Should_Throw_Exception_When_Product_Quantity_Is_Zero()
+    {
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow.AddDays(-1),
+            "Marcio Martins",
+            "Filial SP",
+            new List<CreateSaleItemCommand>
+            {
+                new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 0, 5.00M)
+            }
+        );
+
+        var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        Assert.Contains("The product quantity cannot be zero.", exception.Message);
+    }
+
+    [Fact]
+    public async Task Handle_Should_Throw_Exception_When_SaleDate_Is_In_Future()
+    {
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow.AddDays(1),
+            "Marcio Martins",
+            "Filial SP",
+            new List<CreateSaleItemCommand>
+            {
+                new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 10, 5.00M)
+            }
+        );
+
+        var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        Assert.Contains("The sale date cannot be in the future.", exception.Message);
+    }
+
+    [Fact]
+    public async Task Handle_Should_Throw_Exception_When_Items_List_Is_Empty()
+    {
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow.AddDays(-1),
+            "Marcio Martins",
+            "Filial SP",
+            new List<CreateSaleItemCommand>() // Lista vazia
+        );
+
+        var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        Assert.Contains("Sale must have at least one item.", exception.Message);
+    }
 }
