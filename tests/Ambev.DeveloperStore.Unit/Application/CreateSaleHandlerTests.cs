@@ -4,7 +4,11 @@ using Ambev.DeveloperStore.Domain.Entities;
 using Ambev.DeveloperStore.Domain.Repositories;
 using AutoMapper;
 using NSubstitute;
+using FluentAssertions;
 using Xunit;
+using FluentValidation;
+
+namespace Ambev.DeveloperStore.Unit.Application;
 
 public class CreateSaleHandlerTests
 {
@@ -15,7 +19,7 @@ public class CreateSaleHandlerTests
     public CreateSaleHandlerTests()
     {
         _saleRepository = Substitute.For<ISaleRepository>();
-        _mapper = Substitute.For<IMapper>(); 
+        _mapper = Substitute.For<IMapper>();
         _handler = new CreateSaleHandler(_saleRepository, _mapper);
     }
 
@@ -28,23 +32,29 @@ public class CreateSaleHandlerTests
             .ToList();
 
         var sale = new Sale(command.CustomerName, command.BranchName, items, command.SaleDate);
+        var result = new CreateSaleResult
+        {
+            Id = sale.Id,
+        };
+
+        _mapper.Map<Sale>(command).Returns(sale);
+        _mapper.Map<CreateSaleResult>(sale).Returns(result);
 
         _saleRepository.CreateAsync(Arg.Any<Sale>()).Returns(Task.FromResult(sale));
 
-        _mapper.Map<Sale>(command).Returns(sale); // Mapeamento do AutoMapper
+        var createSaleResult = await _handler.Handle(command, CancellationToken.None);
 
-        var result = await _handler.Handle(command, CancellationToken.None);
-
-        Assert.NotNull(result);
-        Assert.NotEqual(Guid.Empty, result.Id);
+        createSaleResult.Should().NotBeNull();
+        createSaleResult.Id.Should().Be(sale.Id);
+        await _saleRepository.Received(1).CreateAsync(Arg.Any<Sale>(), Arg.Any<CancellationToken>());
     }
 
     [Fact]
-    public async Task Handle_Should_Throw_Exception_When_CustomerName_Is_Empty()
+    public async Task Handle_Should_Throw_Exception_When_CustomerName_Is_LessThan()
     {
         var command = new CreateSaleCommand(
-            DateTime.UtcNow,
-            "",
+            DateTime.UtcNow.AddDays(-1),
+            "AA",
             "Filial SP",
             new List<CreateSaleItemCommand>
             {
@@ -52,28 +62,16 @@ public class CreateSaleHandlerTests
             }
         );
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
+        var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        Assert.Contains("Customer name must be between 3 and 100 characters", exception.Message);
     }
 
     [Fact]
-    public async Task Handle_Should_Throw_Exception_When_Items_Are_Empty()
+    public async Task Handle_Should_Throw_Exception_When_CustomerName_Is_Null()
     {
         var command = new CreateSaleCommand(
-            DateTime.UtcNow,
-            "Marcio Martins",
-            "Filial SP",
-            new List<CreateSaleItemCommand>()
-        );
-
-        await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
-    }
-
-    [Fact]
-    public async Task Handle_Should_Throw_Exception_When_SaleNumber_Is_Invalid()
-    {
-        var command = new CreateSaleCommand(
-            DateTime.UtcNow,
-            "Marcio Martins",
+            DateTime.UtcNow.AddDays(-1),
+            null!,
             "Filial SP",
             new List<CreateSaleItemCommand>
             {
@@ -81,22 +79,41 @@ public class CreateSaleHandlerTests
             }
         );
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
+        var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        Assert.Contains("Customer name cannot be null.", exception.Message);
     }
 
     [Fact]
-    public async Task Handle_Should_Throw_Exception_When_BranchName_Is_Empty()
+    public async Task Handle_Should_Throw_Exception_When_BranchName_Is_Null()
     {
         var command = new CreateSaleCommand(
-            DateTime.UtcNow,
+            DateTime.UtcNow.AddDays(-1),
             "Marcio Martins",
-            "",
+            null!,
             new List<CreateSaleItemCommand>
             {
                 new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 10, 5.00M)
             }
         );
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _handler.Handle(command, CancellationToken.None));
+        var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        Assert.Contains("Branch name cannot be null.", exception.Message);
+    }
+
+    [Fact]
+    public async Task Handle_Should_Throw_Exception_When_BranchName_Is_LessThan()
+    {
+        var command = new CreateSaleCommand(
+            DateTime.UtcNow.AddDays(-1),
+            "Marcio Martins",
+            "AA",
+            new List<CreateSaleItemCommand>
+            {
+                new CreateSaleItemCommand(Guid.NewGuid(), "Cerveja Pilsen", 10, 5.00M)
+            }
+        );
+
+        var exception = await Assert.ThrowsAsync<ValidationException>(() => _handler.Handle(command, CancellationToken.None));
+        Assert.Contains("Branch name must be between 3 and 100 characters.", exception.Message);
     }
 }

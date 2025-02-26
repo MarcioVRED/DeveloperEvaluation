@@ -10,7 +10,7 @@ public class CreateSaleHandlerTestData : IEnumerable<object[]>
         {
             new CreateSaleCommand
             (
-                saleDate: DateTime.UtcNow,
+                saleDate: DateTime.UtcNow.AddDays(-1),
                 customerName: "Marcio Martins",
                 branchName: "Filial SP",
                 items: new List<CreateSaleItemCommand>
@@ -25,7 +25,7 @@ public class CreateSaleHandlerTestData : IEnumerable<object[]>
         {
             new CreateSaleCommand
             (
-                saleDate: DateTime.UtcNow,
+                saleDate: DateTime.UtcNow.AddDays(-1),
                 customerName: "Carlos Souza",
                 branchName: "Filial RJ",
                 items: new List<CreateSaleItemCommand>

@@ -36,6 +36,11 @@ namespace Ambev.DeveloperStore.Domain.Entities
             CalculateTotalSaleAmount();
         }
 
+        public Sale()
+        {
+
+        }
+
         public void CancelSale()
         {
             IsCancelled = true;

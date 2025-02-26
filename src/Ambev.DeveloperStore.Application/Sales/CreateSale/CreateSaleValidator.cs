@@ -18,27 +18,21 @@ namespace Ambev.DeveloperStore.Application.Sales.CreateSale
         /// </remarks>
         public CreateSaleCommandValidator()
         {
-            RuleFor(sale => sale.SaleNumber)
-            .Must(SaleNumberValid)
-            .WithMessage("SaleNumber must be in the format yyyyMMdd-XXX, where 'XXX' is a sequential number.");
-
             RuleFor(sale => sale.SaleDate)
                 .LessThanOrEqualTo(DateTime.Now)
                 .WithMessage("The sale date cannot be in the future.");
 
             RuleFor(sale => sale.CustomerName)
-                .NotEmpty()
+                .NotNull()
+                .WithMessage("Customer name cannot be null.")
                 .Length(3, 100)
                 .WithMessage("Customer name must be between 3 and 100 characters.");
 
             RuleFor(sale => sale.BranchName)
-                .NotEmpty()
+                .NotNull()
+                .WithMessage("Branch name cannot be null.")
                 .Length(3, 100)
                 .WithMessage("Branch name must be between 3 and 100 characters.");
-
-            RuleFor(sale => sale)
-                .Must(s => s.Items.Count > 4 || s.Items.All(item => item.Discount == 0))
-                .WithMessage("Discount is not allowed when the total number of items is 4 or less.");
 
             RuleForEach(sale => sale.Items)
                 .ChildRules(items =>

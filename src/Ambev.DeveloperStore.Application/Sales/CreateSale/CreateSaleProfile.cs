@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Ambev.DeveloperStore.Domain.Entities;
+using System.Diagnostics;
 
 namespace Ambev.DeveloperStore.Application.Sales.CreateSale;
 
 /// <summary>
-/// Profile for mapping between User entity and CreateSaleResponse
+/// Profile for mapping between Sale entity and CreateSaleResponse
 /// </summary>
 public class CreateSaleProfile : Profile
 {

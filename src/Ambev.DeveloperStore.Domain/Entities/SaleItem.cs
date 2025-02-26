@@ -34,6 +34,11 @@ namespace Ambev.DeveloperStore.Domain.Entities
             CalculateTotalItemAmount();
         }
 
+        public SaleItem()
+        {
+
+        }
+
         public void ApplyDiscount(decimal percentage)
         {
             if (percentage < 0 || percentage > 1)
