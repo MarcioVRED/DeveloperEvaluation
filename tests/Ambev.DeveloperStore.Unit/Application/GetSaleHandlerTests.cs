@@ -1,12 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ambev.DeveloperStore.Application.Sales.GetSale;
+using Ambev.DeveloperStore.Domain.Entities;
+using Ambev.DeveloperStore.Domain.Repositories;
+using AutoMapper;
+using FluentAssertions;
+using NSubstitute;
+using Xunit;
 
-namespace Ambev.DeveloperStore.Unit.Application
+namespace Ambev.DeveloperStore.Unit.Application;
+
+public class GetSaleHandlerTests
 {
-    class GetSaleHandlerTests
+    private readonly ISaleRepository _saleRepository;
+    private readonly IMapper _mapper;
+    private readonly GetSaleHandler _handler;
+
+    public GetSaleHandlerTests()
     {
+        _saleRepository = Substitute.For<ISaleRepository>();
+        _mapper = Substitute.For<IMapper>();
+        _handler = new GetSaleHandler(_saleRepository, _mapper);
+    }
+
+    [Fact]
+    public async Task Handle_Should_Return_Sale_When_Found()
+    {
+        var sale = new Sale("Marcio Martins", "Filial SP", new List<SaleItem>(), DateTime.UtcNow);
+
+        var result = _mapper.Map<GetSaleResult>(sale);
+        _saleRepository.GetByIdAsync(sale.Id).Returns(sale);
+
+        var command = new GetSaleCommand(sale.Id);
+        var getSaleResult = await _handler.Handle(command, CancellationToken.None);
+
+        getSaleResult.Should().NotBeNull();
+        getSaleResult.Id.Should().Be(sale.Id);
+    }
+
+    [Fact]
+    public async Task Handle_Should_Throw_Exception_When_Sale_Not_Found()
+    {
+        var saleId = Guid.NewGuid();
+
+        _saleRepository.GetByIdAsync(saleId).Returns(Task.FromException<Sale?>(new KeyNotFoundException($"Sale with ID {saleId} not found.")));
+
+        var exception = await Assert.ThrowsAsync<KeyNotFoundException>(() => _saleRepository.GetByIdAsync(saleId));
+        Assert.Contains($"Sale with ID {saleId} not found.", exception.Message);
+    }
+
+    [Fact]
+    public async Task Handle_Should_Return_Sale_With_Items()
+    {
+        var saleId = Guid.NewGuid();
+        var saleItems = new List<SaleItem>
+        {
+            new SaleItem(Guid.NewGuid(), saleId, "Product A", 2, 15.00M),
+            new SaleItem(Guid.NewGuid(), saleId, "Product B", 3, 25.00M)
+        };
+        var sale = new Sale("Marcio Martins", "Filial SP", saleItems, DateTime.UtcNow);
+
+        var result = _mapper.Map<GetSaleResult>(sale);
+        _saleRepository.GetByIdAsync(sale.Id).Returns(sale);
+
+        var command = new GetSaleCommand(sale.Id);
+        var getSaleResult = await _handler.Handle(command, CancellationToken.None);
+
+        getSaleResult.Should().NotBeNull();
+        getSaleResult.Items.Should().HaveCount(2);
     }
 }

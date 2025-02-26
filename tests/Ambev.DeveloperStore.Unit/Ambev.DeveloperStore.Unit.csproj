@@ -36,6 +36,7 @@
 		<ProjectReference Include="..\..\src\Ambev.DeveloperStore.Domain\Ambev.DeveloperStore.Domain.csproj" />
 		<ProjectReference Include="..\..\src\Ambev.DeveloperStore.Application\Ambev.DeveloperStore.Application.csproj" />
 		<ProjectReference Include="..\..\src\Ambev.DeveloperStore.ORM\Ambev.DeveloperStore.ORM.csproj" />
+		<ProjectReference Include="..\..\src\Ambev.DeveloperStore.WebApi\Ambev.DeveloperStore.WebApi.csproj" />
 	</ItemGroup>
 
 </Project>
