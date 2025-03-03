@@ -3,8 +3,10 @@ using Ambev.DeveloperStore.Common.HealthChecks;
 using Ambev.DeveloperStore.Common.Logging;
 using Ambev.DeveloperStore.Common.Security;
 using Ambev.DeveloperStore.Common.Validation;
+using Ambev.DeveloperStore.Domain.Repositories;
 using Ambev.DeveloperStore.IoC;
 using Ambev.DeveloperStore.ORM;
+using Ambev.DeveloperStore.ORM.Repositories;
 using Ambev.DeveloperStore.WebApi.Middleware;
 using FluentValidation;
 using MediatR;
@@ -42,6 +44,8 @@ public class Program
             builder.RegisterDependencies();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly, typeof(ApplicationLayer).Assembly);
+            builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddMediatR(cfg =>
             {

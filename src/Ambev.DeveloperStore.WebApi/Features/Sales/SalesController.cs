@@ -37,7 +37,7 @@ public class SalesController : BaseController
     /// <summary>
     /// Creates a new sale
     /// </summary>
-    /// <param name="request">The user creation request</param>
+    /// <param name="request">The Sale creation request</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The created user details</returns>
     [HttpPost]
