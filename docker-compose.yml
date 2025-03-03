@@ -1,6 +1,6 @@
 services:
   ambev.DeveloperStore.webapi:
-    container_name: ambev_developer_evaluation_webapi
+    container_name: ambev_developer_store_webapi
     image: ${DOCKER_REGISTRY-}ambevdeveloperstorewebapi
     build:
       context: .
@@ -17,11 +17,11 @@ services:
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
   ambev.DeveloperStore.database:
-    container_name: ambev_developer_evaluation_database
+    container_name: ambev_developer_store_database
     image: postgres:13
 
     environment:
-      POSTGRES_DB: developer_evaluation
+      POSTGRES_DB: developer_store
       POSTGRES_USER: developer
       POSTGRES_PASSWORD: ev@luAt10n
     ports:
@@ -29,7 +29,7 @@ services:
     restart: unless-stopped
 
   ambev.DeveloperStore.nosql:
-    container_name: ambev_developer_evaluation_nosql 
+    container_name: ambev_developer_store_nosql 
     image: mongo:8.0    
     environment:
         MONGO_INITDB_ROOT_USERNAME: developer
@@ -38,7 +38,7 @@ services:
       - "27017"
 
   ambev.DeveloperStore.cache:
-    container_name: ambev_developer_evaluation_cache 
+    container_name: ambev_developer_store_cache 
     image: redis:7.4.1-alpine     
     command: redis-server --requirepass ev@luAt10n
     environment:
