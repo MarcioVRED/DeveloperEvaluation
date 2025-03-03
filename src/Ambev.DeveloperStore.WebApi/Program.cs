@@ -48,7 +48,7 @@ public class Program
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddMediatR(cfg =>
-            {
+            { 
                 cfg.RegisterServicesFromAssemblies(
                     typeof(ApplicationLayer).Assembly,
                     typeof(Program).Assembly
